@@ -1,0 +1,2790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Animals Across the Seasons 🌸☀️🍂❄️</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Lexend (Designed for early ESL & young readers) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    body {
+      font-family: 'Lexend', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: #fbf9f5;
+      color: #1e293b;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    /* Word-by-word karaoke read-along highlighting */
+    .word-active {
+      background-color: #fde047 !important;
+      color: #713f12 !important;
+      border-radius: 6px;
+      padding: 1px 6px;
+      transform: scale(1.08);
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(202, 138, 4, 0.35);
+      transition: all 0.12s ease-out;
+    }
+
+    .animal-card-hover {
+      transition: transform 0.22s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.22s ease;
+    }
+    .animal-card-hover:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+    .animal-card-hover:active {
+      transform: translateY(2px) scale(0.98);
+    }
+
+    svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-amber-200">
+
+  <!-- ================= HEADER NAVIGATION ================= -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b-4 border-emerald-300 shadow-sm transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between flex-wrap gap-3">
+      <!-- Title & Home Link -->
+      <div class="flex items-center space-x-3 cursor-pointer group" onclick="app.showHome()">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-amber-400 via-emerald-400 to-sky-400 flex items-center justify-center text-white text-2xl shadow-md group-hover:rotate-12 transition-transform">
+          🐾
+        </div>
+        <div>
+          <h1 class="text-xl sm:text-2xl font-black text-emerald-800 tracking-tight leading-none group-hover:text-emerald-600 transition-colors">
+            Animals Across the Seasons
+          </h1>
+          <p class="text-xs sm:text-sm font-bold text-amber-700">Grade 1–2 ESL Nature Explorer</p>
+        </div>
+      </div>
+
+      <!-- Header Controls -->
+      <div class="flex items-center space-x-2 sm:space-x-3">
+        <!-- Reading Speed Toggle -->
+        <button id="ttsSpeedBtn" onclick="app.toggleSpeed()" title="Change Reading Speed" class="px-3.5 py-2 bg-amber-50 hover:bg-amber-100 border-2 border-amber-300 rounded-xl text-amber-900 font-bold text-xs sm:text-sm flex items-center gap-1.5 transition shadow-sm active:scale-95">
+          <i class="fa-solid fa-gauge"></i>
+          <span id="speedLabel">Slow 🐢</span>
+        </button>
+
+        <!-- Picture Word Bank -->
+        <button onclick="app.openGlossary()" class="px-3.5 py-2 bg-purple-50 hover:bg-purple-100 border-2 border-purple-300 text-purple-800 rounded-xl font-bold text-xs sm:text-sm flex items-center gap-2 transition shadow-sm active:scale-95">
+          <i class="fa-solid fa-book-open-reader text-purple-600"></i>
+          <span>Word Bank</span>
+        </button>
+
+        <!-- Interactive Quiz -->
+        <button onclick="app.openQuiz()" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 active:scale-95 text-white rounded-xl font-black text-xs sm:text-sm flex items-center gap-2 transition shadow-md shadow-emerald-200">
+          <i class="fa-solid fa-gamepad text-yellow-200"></i>
+          <span>Quiz Time!</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
+  <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-6">
+
+    <!-- VIEW 1: HOMEPAGE (ANIMAL SELECTION GRID) -->
+    <section id="homeView" class="space-y-6">
+      <!-- Welcome Banner for Grade 1-2 ESL Learners -->
+      <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-100 via-teal-50 to-sky-100 border-4 border-emerald-300 p-6 sm:p-8 text-center shadow-sm">
+        <div class="max-w-3xl mx-auto space-y-3">
+          <div class="inline-flex items-center gap-2 bg-white/90 border-2 border-amber-300 px-4 py-1.5 rounded-full text-amber-800 font-bold text-xs sm:text-sm shadow-sm">
+            <span>✨ Choose an Animal to Investigate ✨</span>
+          </div>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-800 tracking-tight leading-tight">
+            What do animals do in each season?
+          </h2>
+          <p class="text-sm sm:text-base text-slate-600 font-medium max-w-2xl mx-auto leading-relaxed">
+            Click an animal picture below! Every animal has <strong>2 or 3 special activities</strong> in 
+            <span class="text-emerald-700 font-extrabold">Spring 🌸</span>, 
+            <span class="text-amber-700 font-extrabold">Summer ☀️</span>, 
+            <span class="text-orange-700 font-extrabold">Autumn 🍂</span>, and 
+            <span class="text-sky-700 font-extrabold">Winter ❄️</span>.
+          </p>
+
+          <div class="pt-2">
+            <button onclick="app.speakSentence('Welcome! Click any animal button below to discover what it does in Spring, Summer, Autumn, and Winter!')" class="inline-flex items-center gap-2 px-5 py-2.5 bg-white hover:bg-emerald-50 border-2 border-emerald-400 rounded-full font-bold text-emerald-800 shadow-sm transition active:scale-95 text-xs sm:text-sm">
+              <i class="fa-solid fa-volume-high text-emerald-600 text-base"></i>
+              <span>Listen to Instructions</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filter Buttons -->
+      <div class="flex items-center justify-center flex-wrap gap-2.5 pt-1">
+        <span class="text-xs font-black uppercase text-slate-400 mr-1 tracking-wider">Show:</span>
+        <button onclick="app.filterAnimals('all')" class="category-btn active px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-emerald-400 bg-emerald-500 text-white shadow-sm transition" data-category="all">
+          🐾 All 10 Animals
+        </button>
+        <button onclick="app.filterAnimals('insect')" class="category-btn px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-300 transition" data-category="insect">
+          🐞 Insects (7)
+        </button>
+        <button onclick="app.filterAnimals('bird')" class="category-btn px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-300 transition" data-category="bird">
+          🐦 Birds (1)
+        </button>
+        <button onclick="app.filterAnimals('water')" class="category-btn px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-300 transition" data-category="water">
+          🐸 Water Animals (2)
+        </button>
+      </div>
+
+      <!-- 10 Animals Grid -->
+      <div id="animalCardsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 sm:gap-5 pt-2">
+        <!-- Rendered via JavaScript -->
+      </div>
+    </section>
+
+    <!-- VIEW 2: ANIMAL DETAIL PAGE -->
+    <section id="detailView" class="hidden space-y-6">
+      
+      <!-- Top Action Bar -->
+      <div class="flex items-center justify-between flex-wrap gap-3 pb-1">
+        <button onclick="app.showHome()" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-2xl bg-white hover:bg-slate-100 border-2 border-slate-300 text-slate-700 font-extrabold text-xs sm:text-sm shadow-sm transition active:scale-95">
+          <i class="fa-solid fa-arrow-left text-emerald-600"></i>
+          <span>Back to All Animals</span>
+        </button>
+
+        <!-- Previous / Next Animal Navigation -->
+        <div class="flex items-center gap-2">
+          <button onclick="app.prevAnimal()" class="px-3.5 py-2 bg-white hover:bg-slate-50 border-2 border-slate-200 rounded-xl text-slate-700 text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1">
+            <i class="fa-solid fa-chevron-left"></i> Previous
+          </button>
+          <button onclick="app.nextAnimal()" class="px-3.5 py-2 bg-white hover:bg-slate-50 border-2 border-slate-200 rounded-xl text-slate-700 text-xs sm:text-sm font-bold shadow-sm transition flex items-center gap-1">
+            Next <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Animal Banner -->
+      <div id="detailAnimalBanner" class="relative overflow-hidden rounded-3xl bg-white border-4 border-emerald-300 p-6 shadow-sm flex flex-col md:flex-row items-center gap-6">
+        <!-- Animal Portrait (Embedded SVG) -->
+        <div id="detailAnimalImgContainer" class="relative w-36 h-36 sm:w-44 sm:h-44 flex-shrink-0 rounded-2xl overflow-hidden shadow-md border-4 border-emerald-100 bg-slate-50 flex items-center justify-center p-2">
+          <!-- Injected dynamically -->
+        </div>
+
+        <!-- Animal Info -->
+        <div class="space-y-3 flex-grow text-center md:text-left">
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-3">
+            <h2 id="detailAnimalTitle" class="text-3xl sm:text-4xl font-black text-slate-800 tracking-tight"></h2>
+            
+            <button onclick="app.speakCurrentAnimalName()" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 border-2 border-emerald-300 rounded-xl text-emerald-800 font-bold text-xs sm:text-sm transition shadow-sm active:scale-95">
+              <i class="fa-solid fa-volume-high text-emerald-600"></i>
+              <span>Listen</span>
+            </button>
+
+            <span id="detailAnimalType" class="px-3 py-1 bg-amber-100 text-amber-800 font-extrabold rounded-xl text-xs border border-amber-300"></span>
+          </div>
+
+          <p id="detailAnimalPhonics" class="text-xs sm:text-sm font-bold text-slate-500"></p>
+          <p id="detailAnimalFunFact" class="text-xs sm:text-sm text-slate-600 font-medium max-w-2xl bg-emerald-50/70 p-3.5 rounded-2xl border border-emerald-100 leading-relaxed"></p>
+        </div>
+      </div>
+
+      <!-- Season Tabs -->
+      <div>
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-base sm:text-lg font-black text-slate-800 flex items-center gap-2">
+            <span>Choose a Season to Investigate:</span>
+            <span class="text-xs font-semibold text-slate-400">(2 or 3 activities per season)</span>
+          </h3>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+          <!-- Spring Tab -->
+          <button onclick="app.selectSeason('spring')" id="seasonTab-spring" class="season-tab p-3.5 sm:p-4 rounded-2xl border-4 transition text-center flex flex-col items-center gap-1 bg-white border-emerald-300 hover:border-emerald-500 shadow-sm cursor-pointer">
+            <span class="text-3xl">🌸</span>
+            <span class="text-base font-black text-emerald-900">Spring</span>
+            <span class="text-xs font-semibold text-emerald-600">Waking Up & Eggs</span>
+          </button>
+
+          <!-- Summer Tab -->
+          <button onclick="app.selectSeason('summer')" id="seasonTab-summer" class="season-tab p-3.5 sm:p-4 rounded-2xl border-4 transition text-center flex flex-col items-center gap-1 bg-white border-amber-300 hover:border-amber-500 shadow-sm cursor-pointer">
+            <span class="text-3xl">☀️</span>
+            <span class="text-base font-black text-amber-900">Summer</span>
+            <span class="text-xs font-semibold text-amber-600">Active & Growing</span>
+          </button>
+
+          <!-- Autumn Tab -->
+          <button onclick="app.selectSeason('autumn')" id="seasonTab-autumn" class="season-tab p-3.5 sm:p-4 rounded-2xl border-4 transition text-center flex flex-col items-center gap-1 bg-white border-orange-300 hover:border-orange-500 shadow-sm cursor-pointer">
+            <span class="text-3xl">🍂</span>
+            <span class="text-base font-black text-orange-900">Autumn</span>
+            <span class="text-xs font-semibold text-orange-600">Storing & Preparing</span>
+          </button>
+
+          <!-- Winter Tab -->
+          <button onclick="app.selectSeason('winter')" id="seasonTab-winter" class="season-tab p-3.5 sm:p-4 rounded-2xl border-4 transition text-center flex flex-col items-center gap-1 bg-white border-sky-300 hover:border-sky-500 shadow-sm cursor-pointer">
+            <span class="text-3xl">❄️</span>
+            <span class="text-base font-black text-sky-900">Winter</span>
+            <span class="text-xs font-semibold text-sky-600">Sleeping & Resting</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Season Content Panel -->
+      <div id="seasonContainer" class="rounded-3xl border-4 p-5 sm:p-8 space-y-6 transition-all duration-200">
+        <!-- Season Header -->
+        <div class="flex items-center justify-between flex-wrap gap-4 border-b-2 border-slate-200/80 pb-4">
+          <div class="space-y-1">
+            <div class="flex items-center gap-2">
+              <span id="seasonBadgeIcon" class="text-2xl">🌸</span>
+              <h3 id="seasonHeadline" class="text-lg sm:text-2xl font-black text-slate-800"></h3>
+            </div>
+            <p id="seasonSubtext" class="text-xs sm:text-sm font-medium text-slate-600"></p>
+          </div>
+
+          <button onclick="app.readAllCurrentSeason()" class="inline-flex items-center gap-2 px-4 py-2.5 bg-white hover:bg-slate-50 border-2 border-slate-300 rounded-2xl font-extrabold text-slate-700 shadow-sm active:scale-95 transition text-xs sm:text-sm">
+            <i class="fa-solid fa-play-circle text-emerald-500 text-lg"></i>
+            <span>Read All Activities</span>
+          </button>
+        </div>
+
+        <!-- 2 to 3 Activities List Grid -->
+        <div id="activitiesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Filled dynamically via JS with exact 2 or 3 activities, each with its dedicated picture -->
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ================= WORD BANK MODAL ================= -->
+  <div id="glossaryModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white max-w-2xl w-full rounded-3xl border-4 border-purple-300 shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto space-y-5">
+      <div class="flex items-center justify-between border-b-2 border-purple-100 pb-3">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">📖</span>
+          <div>
+            <h3 class="text-xl font-black text-purple-900">ESL Picture Word Bank</h3>
+            <p class="text-xs text-purple-600 font-semibold">Important Science & Nature Words</p>
+          </div>
+        </div>
+        <button onclick="app.closeGlossary()" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-lg transition">
+          ✕
+        </button>
+      </div>
+
+      <div id="glossaryGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <!-- Injected via JavaScript -->
+      </div>
+
+      <div class="pt-2 text-center">
+        <button onclick="app.closeGlossary()" class="px-6 py-2.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl shadow-md transition">
+          Close Word Bank 👍
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= QUIZ MODAL ================= -->
+  <div id="quizModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white max-w-xl w-full rounded-3xl border-4 border-emerald-400 shadow-2xl p-6 sm:p-8 space-y-6">
+      
+      <div class="flex items-center justify-between border-b-2 border-emerald-100 pb-3">
+        <div class="flex items-center gap-3">
+          <span class="text-3xl">🎮</span>
+          <div>
+            <h3 class="text-xl font-black text-emerald-900">Who Am I in This Season?</h3>
+            <p class="text-xs text-emerald-600 font-semibold">Match the animal activity!</p>
+          </div>
+        </div>
+        <button onclick="app.closeQuiz()" class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold flex items-center justify-center text-lg transition">
+          ✕
+        </button>
+      </div>
+
+      <!-- Question Box -->
+      <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-5 space-y-3">
+        <div class="flex items-center justify-between text-xs font-black uppercase text-amber-700">
+          <span id="quizSeasonTag">🌸 SPRING QUESTION</span>
+          <span id="quizScoreTag">Score: 0</span>
+        </div>
+        <p id="quizQuestionText" class="text-base sm:text-lg font-extrabold text-slate-800 leading-snug"></p>
+        
+        <button onclick="app.speakQuizQuestion()" class="inline-flex items-center gap-1.5 px-3 py-1 bg-white hover:bg-amber-100 border border-amber-300 rounded-full text-xs font-bold text-amber-800 transition">
+          <i class="fa-solid fa-volume-high"></i> Listen to question
+        </button>
+      </div>
+
+      <!-- Quiz Options Grid -->
+      <div id="quizOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <!-- Rendered dynamically -->
+      </div>
+
+      <!-- Feedback Banner -->
+      <div id="quizFeedback" class="hidden p-3 rounded-2xl text-center font-bold text-sm"></div>
+
+      <div class="pt-2">
+        <button onclick="app.nextQuizQuestion()" class="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold rounded-2xl shadow-md transition active:scale-95 text-sm sm:text-base">
+          Next Question ➡️
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="mt-12 bg-white border-t-2 border-slate-200 py-6 text-center text-slate-500 text-xs sm:text-sm font-medium">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="flex items-center gap-1.5 font-bold text-slate-700">
+        <span>🐾 Animals Across the Seasons</span>
+        <span>• Grade 1 & 2 ESL Learning</span>
+      </p>
+      <p class="text-slate-400">
+        10 Animals • Exactly 2 or 3 Dedicated Pictures & Activities Per Season • Audio Read-Along 🌱
+      </p>
+    </div>
+  </footer>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    /**
+     * Web Audio API Sound Generator
+     */
+    const soundFx = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+      },
+      play(type = 'success') {
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+
+          const now = this.ctx.currentTime;
+
+          if (type === 'success') {
+            osc.frequency.setValueAtTime(523.25, now);
+            osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.1);
+            osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.2);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+            osc.start(now);
+            osc.stop(now + 0.45);
+          } else if (type === 'pop') {
+            osc.frequency.setValueAtTime(400, now);
+            osc.frequency.exponentialRampToValueAtTime(700, now + 0.08);
+            gain.gain.setValueAtTime(0.12, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+            osc.start(now);
+            osc.stop(now + 0.1);
+          } else if (type === 'tryAgain') {
+            osc.frequency.setValueAtTime(280, now);
+            osc.frequency.linearRampToValueAtTime(180, now + 0.25);
+            gain.gain.setValueAtTime(0.2, now);
+            gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+            osc.start(now);
+            osc.stop(now + 0.3);
+          }
+        } catch (e) {
+          console.warn('Audio FX error:', e);
+        }
+      }
+    };
+
+    /**
+     * Complete SVG Graphics Engine:
+     * Contains dedicated, distinct action artwork for EVERY SINGLE seasonal activity
+     * so that the visual strictly matches the sentence action.
+     */
+    const SceneArt = {
+      // 10 Animal Main Portraits for Home & Banner
+      portraits: {
+        ladybug: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="50" cy="58" rx="34" ry="32" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+            <line x1="50" y1="26" x2="50" y2="90" stroke="#0f172a" stroke-width="2.5"/>
+            <circle cx="50" cy="30" r="16" fill="#0f172a"/>
+            <circle cx="43" cy="24" r="3" fill="#ffffff"/><circle cx="57" cy="24" r="3" fill="#ffffff"/>
+            <line x1="43" y1="18" x2="35" y2="8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+            <line x1="57" y1="18" x2="65" y2="8" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="36" cy="46" r="5" fill="#0f172a"/><circle cx="64" cy="46" r="5" fill="#0f172a"/>
+            <circle cx="32" cy="68" r="4.5" fill="#0f172a"/><circle cx="68" cy="68" r="4.5" fill="#0f172a"/>
+            <circle cx="48" cy="78" r="4" fill="#0f172a"/>
+          </svg>`,
+        sparrows: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <circle cx="46" cy="48" r="26" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+            <circle cx="60" cy="36" r="16" fill="#d97706"/>
+            <circle cx="64" cy="33" r="3" fill="#0f172a"/>
+            <polygon points="76,34 88,38 76,43" fill="#f59e0b" stroke="#b45309" stroke-width="1"/>
+            <path d="M 24,52 Q 12,65 18,74 Q 30,68 36,60 Z" fill="#78350f"/>
+            <circle cx="58" cy="42" r="6" fill="#fed7aa"/>
+          </svg>`,
+        ants: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="70" cy="50" rx="14" ry="11" fill="#78350f"/>
+            <circle cx="48" cy="52" r="8" fill="#92400e"/>
+            <ellipse cx="28" cy="53" rx="16" ry="12" fill="#78350f"/>
+            <path d="M 46,55 Q 36,70 30,82 M 48,55 Q 50,72 54,82 M 52,55 Q 64,70 70,80" stroke="#451a03" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <circle cx="74" cy="46" r="2" fill="#ffffff"/>
+            <line x1="76" y1="44" x2="88" y2="34" stroke="#451a03" stroke-width="2" stroke-linecap="round"/>
+            <line x1="76" y1="46" x2="88" y2="44" stroke="#451a03" stroke-width="2" stroke-linecap="round"/>
+          </svg>`,
+        dragonflies: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="50" cy="30" rx="10" ry="8" fill="#0284c7"/>
+            <circle cx="44" cy="27" r="4.5" fill="#15803d"/><circle cx="56" cy="27" r="4.5" fill="#15803d"/>
+            <line x1="50" y1="36" x2="50" y2="88" stroke="#0369a1" stroke-width="4.5" stroke-linecap="round"/>
+            <ellipse cx="24" cy="35" rx="22" ry="5" fill="#bae6fd" opacity="0.8" transform="rotate(-10 24 35)" stroke="#38bdf8"/>
+            <ellipse cx="76" cy="35" rx="22" ry="5" fill="#bae6fd" opacity="0.8" transform="rotate(10 76 35)" stroke="#38bdf8"/>
+          </svg>`,
+        butterflies: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <path d="M 50,45 C 35,15 10,20 16,52 C 20,70 45,62 50,56 Z" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
+            <path d="M 50,45 C 65,15 90,20 84,52 C 80,70 55,62 50,56 Z" fill="#f97316" stroke="#c2410c" stroke-width="1.5"/>
+            <ellipse cx="50" cy="52" rx="3.5" ry="20" fill="#1e293b"/>
+            <line x1="48" y1="34" x2="38" y2="22" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+            <line x1="52" y1="34" x2="62" y2="22" stroke="#1e293b" stroke-width="2" stroke-linecap="round"/>
+          </svg>`,
+        frogs: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="50" cy="62" rx="30" ry="22" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+            <circle cx="34" cy="42" r="11" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+            <circle cx="66" cy="42" r="11" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+            <circle cx="34" cy="41" r="5" fill="#0f172a"/><circle cx="66" cy="41" r="5" fill="#0f172a"/>
+            <path d="M 38,64 Q 50,72 62,64" stroke="#166534" stroke-width="3" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        bees: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="48" cy="54" rx="26" ry="20" fill="#fbbf24" stroke="#d97706" stroke-width="2"/>
+            <path d="M 42,35 L 42,73 M 52,35 L 52,73 M 62,38 L 62,70" stroke="#1e293b" stroke-width="5"/>
+            <circle cx="28" cy="50" r="12" fill="#1e293b"/>
+            <ellipse cx="45" cy="30" rx="14" ry="8" fill="#e0f2fe" opacity="0.8" stroke="#7dd3fc" transform="rotate(-30 45 30)"/>
+          </svg>`,
+        beetles: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="50" cy="58" rx="26" ry="24" fill="#0f766e" stroke="#134e4a" stroke-width="2"/>
+            <path d="M 32,44 C 34,30 66,30 68,44 Z" fill="#042f2e"/>
+            <path d="M 50,32 Q 50,14 62,10" stroke="#042f2e" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <line x1="50" y1="44" x2="50" y2="82" stroke="#042f2e" stroke-width="2"/>
+          </svg>`,
+        'stick-insects': `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <line x1="15" y1="85" x2="85" y2="15" stroke="#78350f" stroke-width="6" stroke-linecap="round"/>
+            <line x1="26" y1="74" x2="72" y2="28" stroke="#65a30d" stroke-width="4.5" stroke-linecap="round"/>
+            <path d="M 40,60 L 32,54 M 48,52 L 40,42 M 56,44 L 62,54 M 64,36 L 72,44" stroke="#4d7c0f" stroke-width="2" stroke-linecap="round"/>
+          </svg>`,
+        fish: `
+          <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow">
+            <ellipse cx="46" cy="50" rx="30" ry="18" fill="#f97316" stroke="#c2410c" stroke-width="2"/>
+            <polygon points="18,50 4,34 8,50 4,66" fill="#ea580c"/>
+            <circle cx="64" cy="46" r="4.5" fill="#ffffff"/><circle cx="65" cy="46" r="2.5" fill="#0f172a"/>
+          </svg>`
+      },
+
+      // Dedicated Action Pictures for Every Activity
+      actionPics: {
+        // LADYBUG (4 seasons x 2 activities = 8 distinct pictures)
+        lb_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 20,130 C 30,30 130,20 185,45 C 160,110 80,135 20,130 Z" fill="#4ade80" stroke="#16a34a" stroke-width="3"/>
+            <path d="M 20,130 Q 90,75 185,45" stroke="#15803d" stroke-width="2" fill="none"/>
+            <circle cx="125" cy="50" r="4" fill="#a3e635" stroke="#4d7c0f"/>
+            <circle cx="138" cy="48" r="3.5" fill="#a3e635" stroke="#4d7c0f"/>
+            <circle cx="132" cy="58" r="3" fill="#a3e635" stroke="#4d7c0f"/>
+            <ellipse cx="85" cy="75" rx="20" ry="18" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+            <circle cx="98" cy="65" r="8" fill="#0f172a"/>
+            <line x1="85" y1="57" x2="85" y2="93" stroke="#0f172a" stroke-width="2"/>
+            <circle cx="76" cy="69" r="3" fill="#0f172a"/><circle cx="77" cy="81" r="3" fill="#0f172a"/><circle cx="90" cy="83" r="3" fill="#0f172a"/>
+          </svg>`,
+        lb_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 10,20 C 80,10 160,40 190,110 C 130,130 50,110 10,20 Z" fill="#86efac" stroke="#16a34a" stroke-width="2.5"/>
+            <ellipse cx="65" cy="55" rx="16" ry="14" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+            <circle cx="76" cy="48" r="6" fill="#0f172a"/>
+            <ellipse cx="115" cy="70" rx="3.5" ry="5.5" fill="#facc15" stroke="#ca8a04"/>
+            <ellipse cx="123" cy="69" rx="3.5" ry="5.5" fill="#facc15" stroke="#ca8a04"/>
+            <ellipse cx="131" cy="70" rx="3.5" ry="5.5" fill="#facc15" stroke="#ca8a04"/>
+            <ellipse cx="119" cy="80" rx="3.5" ry="5.5" fill="#facc15" stroke="#ca8a04"/>
+            <ellipse cx="127" cy="79" rx="3.5" ry="5.5" fill="#facc15" stroke="#ca8a04"/>
+          </svg>`,
+        lb_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <circle cx="170" cy="25" r="16" fill="#fde047" stroke="#eab308" stroke-width="2"/>
+            <circle cx="50" cy="95" r="14" fill="#f43f5e"/>
+            <circle cx="50" cy="95" r="7" fill="#fef08a"/>
+            <path d="M 50,109 Q 50,130 45,130" stroke="#16a34a" stroke-width="4"/>
+            <g transform="translate(105, 50)">
+              <ellipse cx="-12" cy="-6" rx="14" ry="8" fill="#ef4444" stroke="#991b1b" transform="rotate(-30)"/>
+              <ellipse cx="12" cy="-6" rx="14" ry="8" fill="#ef4444" stroke="#991b1b" transform="rotate(30)"/>
+              <ellipse cx="-8" cy="2" rx="12" ry="5" fill="#bae6fd" opacity="0.7"/>
+              <ellipse cx="8" cy="2" rx="12" ry="5" fill="#bae6fd" opacity="0.7"/>
+              <ellipse cx="0" cy="0" rx="6" ry="12" fill="#0f172a"/>
+            </g>
+          </svg>`,
+        lb_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <circle cx="175" cy="25" r="18" fill="#f59e0b"/>
+            <path d="M 0,110 Q 70,80 140,110 L 200,95" stroke="#16a34a" stroke-width="8" fill="none"/>
+            <circle cx="145" cy="92" r="3.5" fill="#84cc16"/>
+            <circle cx="155" cy="90" r="3.5" fill="#84cc16"/>
+            <ellipse cx="90" cy="80" rx="18" ry="16" fill="#ef4444" stroke="#991b1b" stroke-width="2"/>
+            <circle cx="102" cy="74" r="7" fill="#0f172a"/>
+            <circle cx="82" cy="78" r="3" fill="#0f172a"/><circle cx="92" cy="86" r="3" fill="#0f172a"/>
+          </svg>`,
+        lb_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 15,105 L 25,125 L 40,110 Z" fill="#ea580c"/>
+            <path d="M 160,110 L 180,125 L 185,105 Z" fill="#d97706"/>
+            <path d="M 40,115 Q 90,75 155,100 Q 165,125 50,130 Z" fill="#cbd5e1" stroke="#64748b" stroke-width="2"/>
+            <ellipse cx="85" cy="107" rx="8" ry="7" fill="#ef4444"/>
+            <ellipse cx="102" cy="104" rx="9" ry="8" fill="#ef4444"/>
+            <ellipse cx="118" cy="108" rx="8" ry="7" fill="#ef4444"/>
+          </svg>`,
+        lb_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 20,80 Q 70,50 110,85 Q 60,110 20,80 Z" fill="#d97706"/>
+            <path d="M 80,95 Q 130,65 170,100 Q 120,125 80,95 Z" fill="#b45309"/>
+            <ellipse cx="70" cy="98" rx="14" ry="12" fill="#ef4444" stroke="#991b1b"/>
+            <circle cx="78" cy="94" r="5" fill="#0f172a"/>
+          </svg>`,
+        lb_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <path d="M 0,0 L 200,0 L 200,25 Q 120,32 70,20 Q 30,30 0,22 Z" fill="#e0f2fe"/>
+            <path d="M 20,35 C 30,75 25,115 20,130 L 90,130 C 95,105 90,65 85,35 Z" fill="#78350f" stroke="#451a03" stroke-width="3"/>
+            <rect x="85" y="40" width="80" height="90" fill="#451a03"/>
+            <ellipse cx="110" cy="75" rx="9" ry="8" fill="#dc2626"/>
+            <ellipse cx="128" cy="88" rx="9" ry="8" fill="#dc2626"/>
+          </svg>`,
+        lb_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <rect x="30" y="30" width="140" height="85" rx="16" fill="#451a03"/>
+            <circle cx="85" cy="70" r="10" fill="#ef4444"/>
+            <circle cx="102" cy="66" r="10" fill="#ef4444"/>
+            <circle cx="118" cy="72" r="10" fill="#ef4444"/>
+            <circle cx="94" cy="84" r="10" fill="#ef4444"/>
+            <circle cx="110" cy="85" r="10" fill="#ef4444"/>
+          </svg>`,
+
+        // SPARROWS
+        sp_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 0,95 Q 80,105 200,85" stroke="#78350f" stroke-width="12" fill="none"/>
+            <path d="M 90,92 C 90,120 160,120 160,92 Z" fill="#92400e" stroke="#5c2b09" stroke-width="2"/>
+            <circle cx="115" cy="90" r="4.5" fill="#bae6fd" stroke="#0284c7"/>
+            <circle cx="126" cy="88" r="4.5" fill="#bae6fd" stroke="#0284c7"/>
+            <circle cx="137" cy="91" r="4.5" fill="#bae6fd" stroke="#0284c7"/>
+            <ellipse cx="55" cy="65" rx="18" ry="14" fill="#b45309"/>
+            <circle cx="70" cy="56" r="10" fill="#d97706"/>
+            <polygon points="80,56 94,59 80,63" fill="#f59e0b"/>
+            <line x1="88" y1="59" x2="108" y2="52" stroke="#78350f" stroke-width="2.5"/>
+          </svg>`,
+        sp_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 60,90 C 60,125 140,125 140,90 Z" fill="#92400e"/>
+            <circle cx="85" cy="85" r="7" fill="#fed7aa"/>
+            <polygon points="82,82 86,76 90,82" fill="#f59e0b"/>
+            <circle cx="115" cy="85" r="7" fill="#fed7aa"/>
+            <polygon points="112,82 116,76 120,82" fill="#f59e0b"/>
+            <ellipse cx="40" cy="60" rx="16" ry="12" fill="#b45309"/>
+            <polygon points="52,58 64,62 52,65" fill="#f59e0b"/>
+          </svg>`,
+        sp_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <ellipse cx="100" cy="100" rx="65" ry="18" fill="#d4a373"/>
+            <circle cx="65" cy="80" r="14" fill="#eddcd2" opacity="0.7"/>
+            <circle cx="135" cy="80" r="14" fill="#eddcd2" opacity="0.7"/>
+            <circle cx="100" cy="65" r="12" fill="#eddcd2" opacity="0.8"/>
+            <ellipse cx="100" cy="92" rx="18" ry="13" fill="#b45309"/>
+            <circle cx="114" cy="86" r="8" fill="#d97706"/>
+            <path d="M 85,86 L 72,76 L 84,92 Z" fill="#78350f"/>
+            <path d="M 110,86 L 124,76 L 114,92 Z" fill="#78350f"/>
+          </svg>`,
+        sp_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <ellipse cx="100" cy="100" rx="70" ry="18" fill="#7dd3fc"/>
+            <ellipse cx="100" cy="100" rx="55" ry="12" fill="#38bdf8"/>
+            <ellipse cx="100" cy="88" rx="18" ry="12" fill="#b45309"/>
+            <circle cx="114" cy="82" r="7" fill="#d97706"/>
+            <circle cx="70" cy="80" r="3" fill="#0284c7"/>
+            <circle cx="130" cy="78" r="3" fill="#0284c7"/>
+          </svg>`,
+        sp_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <rect y="95" width="200" height="35" fill="#78350f"/>
+            <circle cx="30" cy="110" r="6" fill="#ea580c"/>
+            <circle cx="170" cy="115" r="8" fill="#d97706"/>
+            <circle cx="110" cy="104" r="3" fill="#fef08a" stroke="#ca8a04"/>
+            <circle cx="118" cy="108" r="3" fill="#fef08a" stroke="#ca8a04"/>
+            <circle cx="125" cy="102" r="3" fill="#fef08a" stroke="#ca8a04"/>
+            <ellipse cx="75" cy="90" rx="18" ry="13" fill="#b45309" transform="rotate(15 75 90)"/>
+            <circle cx="94" cy="94" r="8" fill="#d97706"/>
+            <polygon points="101,94 110,100 101,102" fill="#f59e0b"/>
+          </svg>`,
+        sp_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 0,130 Q 100,70 200,130" fill="#92400e" opacity="0.4"/>
+            <ellipse cx="60" cy="55" rx="14" ry="9" fill="#b45309"/>
+            <ellipse cx="100" cy="45" rx="15" ry="10" fill="#b45309"/>
+            <ellipse cx="140" cy="60" rx="14" ry="9" fill="#b45309"/>
+          </svg>`,
+        sp_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <text x="30" y="30" font-size="14" fill="#38bdf8">❄️</text>
+            <text x="160" y="40" font-size="16" fill="#38bdf8">❄️</text>
+            <line x1="10" y1="105" x2="190" y2="105" stroke="#451a03" stroke-width="8"/>
+            <rect x="20" y="97" width="160" height="6" rx="3" fill="#ffffff"/>
+            <circle cx="100" cy="80" r="22" fill="#b45309" stroke="#78350f" stroke-width="2"/>
+            <circle cx="114" cy="70" r="9" fill="#d97706"/>
+            <polygon points="122,69 131,72 122,75" fill="#f59e0b"/>
+            <circle cx="116" cy="68" r="2" fill="#000"/>
+          </svg>`,
+        sp_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <rect y="95" width="200" height="35" fill="#e0f2fe"/>
+            <circle cx="130" cy="85" r="4" fill="#dc2626"/>
+            <circle cx="138" cy="80" r="4" fill="#dc2626"/>
+            <circle cx="146" cy="86" r="4" fill="#dc2626"/>
+            <ellipse cx="80" cy="85" rx="16" ry="12" fill="#b45309"/>
+            <circle cx="94" cy="80" r="7" fill="#d97706"/>
+            <polygon points="100,80 108,82 100,85" fill="#f59e0b"/>
+          </svg>`,
+
+        // ANTS
+        ant_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <circle cx="170" cy="25" r="16" fill="#facc15"/>
+            <path d="M 20,130 Q 90,70 160,130 Z" fill="#b45309"/>
+            <ellipse cx="90" cy="98" rx="14" ry="7" fill="#451a03"/>
+            <circle cx="95" cy="88" r="3.5" fill="#0f172a"/>
+            <circle cx="115" cy="105" r="4" fill="#0f172a"/>
+            <circle cx="135" cy="115" r="4" fill="#0f172a"/>
+          </svg>`,
+        ant_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 30,130 Q 100,80 170,130 Z" fill="#b45309"/>
+            <g transform="translate(85, 75)">
+              <ellipse cx="10" cy="10" rx="8" ry="6" fill="#78350f"/>
+              <circle cx="2" cy="11" r="3.5" fill="#78350f"/>
+              <circle cx="18" cy="8" r="2.5" fill="#ca8a04"/>
+            </g>
+          </svg>`,
+        ant_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <rect y="100" width="200" height="30" fill="#eab308" opacity="0.3"/>
+            <g transform="translate(60, 55)">
+              <path d="M 30,10 C 10,-25 50,-35 70,-10 C 60,15 40,15 30,10 Z" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+              <ellipse cx="40" cy="30" rx="9" ry="7" fill="#78350f"/>
+              <circle cx="28" cy="32" r="5" fill="#92400e"/>
+              <ellipse cx="16" cy="33" rx="10" ry="8" fill="#78350f"/>
+              <line x1="26" y1="35" x2="20" y2="48" stroke="#451a03" stroke-width="2"/>
+              <line x1="28" y1="35" x2="30" y2="48" stroke="#451a03" stroke-width="2"/>
+              <line x1="32" y1="35" x2="38" y2="48" stroke="#451a03" stroke-width="2"/>
+            </g>
+          </svg>`,
+        ant_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <path d="M 10,95 Q 100,65 190,95" stroke="#ca8a04" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+            <circle cx="45" cy="88" r="4" fill="#451a03"/>
+            <circle cx="85" cy="80" r="4" fill="#451a03"/>
+            <circle cx="125" cy="80" r="4" fill="#451a03"/>
+            <circle cx="165" cy="88" r="4" fill="#451a03"/>
+          </svg>`,
+        ant_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#78350f"/>
+            <ellipse cx="70" cy="85" rx="35" ry="24" fill="#451a03"/>
+            <circle cx="58" cy="89" r="3.5" fill="#facc15"/>
+            <circle cx="68" cy="91" r="4" fill="#facc15"/>
+            <circle cx="78" cy="90" r="3.5" fill="#facc15"/>
+            <circle cx="62" cy="97" r="3.5" fill="#facc15"/>
+            <circle cx="72" cy="98" r="3.5" fill="#facc15"/>
+            <ellipse cx="140" cy="70" rx="10" ry="7" fill="#92400e"/>
+          </svg>`,
+        ant_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 40,130 Q 100,75 160,130 Z" fill="#b45309"/>
+            <ellipse cx="100" cy="95" rx="14" ry="7" fill="#451a03"/>
+            <line x1="90" y1="92" x2="110" y2="98" stroke="#78350f" stroke-width="3"/>
+            <line x1="95" y1="98" x2="105" y2="92" stroke="#78350f" stroke-width="3"/>
+          </svg>`,
+        ant_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="25" fill="#e0f2fe"/>
+            <rect y="25" width="200" height="105" fill="#451a03"/>
+            <ellipse cx="100" cy="85" rx="42" ry="28" fill="#291205"/>
+            <circle cx="90" cy="82" r="5" fill="#b45309"/>
+            <circle cx="102" cy="80" r="5" fill="#b45309"/>
+            <circle cx="112" cy="84" r="5" fill="#b45309"/>
+            <circle cx="95" cy="92" r="5" fill="#b45309"/>
+            <circle cx="108" cy="93" r="5" fill="#b45309"/>
+          </svg>`,
+        ant_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#291205"/>
+            <ellipse cx="100" cy="65" rx="18" ry="12" fill="#78350f"/>
+            <circle cx="85" cy="65" r="7" fill="#92400e"/>
+            <circle cx="70" cy="60" r="4" fill="#b45309"/>
+            <circle cx="130" cy="60" r="4" fill="#b45309"/>
+            <circle cx="100" cy="90" r="4" fill="#b45309"/>
+          </svg>`,
+
+        // DRAGONFLIES
+        df_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <rect y="75" width="200" height="55" fill="#38bdf8"/>
+            <line x1="100" y1="130" x2="100" y2="20" stroke="#16a34a" stroke-width="6"/>
+            <ellipse cx="100" cy="60" rx="6" ry="16" fill="#65a30d"/>
+            <circle cx="100" cy="43" r="7" fill="#84cc16"/>
+          </svg>`,
+        df_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <circle cx="170" cy="25" r="16" fill="#fde047"/>
+            <line x1="100" y1="35" x2="100" y2="85" stroke="#0284c7" stroke-width="4.5" stroke-linecap="round"/>
+            <circle cx="100" cy="30" r="7" fill="#0369a1"/>
+            <ellipse cx="65" cy="40" rx="26" ry="6" fill="#bae6fd" opacity="0.9" stroke="#38bdf8"/>
+            <ellipse cx="135" cy="40" rx="26" ry="6" fill="#bae6fd" opacity="0.9" stroke="#38bdf8"/>
+          </svg>`,
+        df_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#e0f2fe"/>
+            <circle cx="170" cy="25" r="16" fill="#fde047"/>
+            <ellipse cx="60" cy="110" rx="35" ry="10" fill="#15803d"/>
+            <line x1="100" y1="35" x2="100" y2="85" stroke="#0284c7" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="100" cy="32" r="7" fill="#0369a1"/>
+            <ellipse cx="70" cy="40" rx="25" ry="5" fill="#bae6fd" opacity="0.8" stroke="#38bdf8"/>
+            <ellipse cx="130" cy="40" rx="25" ry="5" fill="#bae6fd" opacity="0.8" stroke="#38bdf8"/>
+          </svg>`,
+        df_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#e0f2fe"/>
+            <rect y="70" width="200" height="60" fill="#38bdf8"/>
+            <ellipse cx="70" cy="95" rx="30" ry="8" fill="#15803d"/>
+            <ellipse cx="140" cy="100" rx="35" ry="9" fill="#15803d"/>
+            <g transform="translate(100, 45) rotate(25)">
+              <line x1="0" y1="-20" x2="0" y2="20" stroke="#0284c7" stroke-width="4"/>
+              <ellipse cx="-15" cy="-5" rx="14" ry="4" fill="#bae6fd"/>
+              <ellipse cx="15" cy="-5" rx="14" ry="4" fill="#bae6fd"/>
+            </g>
+          </svg>`,
+        df_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <rect y="65" width="200" height="65" fill="#0284c7" opacity="0.8"/>
+            <path d="M 60,30 Q 85,40 80,78" stroke="#0369a1" stroke-width="4" fill="none"/>
+            <circle cx="60" cy="26" r="6" fill="#0369a1"/>
+            <ellipse cx="80" cy="80" rx="16" ry="5" fill="none" stroke="#bae6fd" stroke-width="2"/>
+            <circle cx="80" cy="90" r="2" fill="#fef08a"/>
+            <circle cx="83" cy="97" r="2" fill="#fef08a"/>
+          </svg>`,
+        df_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 50,120 Q 100,70 160,110 Z" fill="#94a3b8"/>
+            <line x1="110" y1="80" x2="110" y2="105" stroke="#0284c7" stroke-width="4"/>
+            <ellipse cx="95" cy="85" rx="14" ry="4" fill="#bae6fd"/>
+            <ellipse cx="125" cy="85" rx="14" ry="4" fill="#bae6fd"/>
+          </svg>`,
+        df_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="22" fill="#bae6fd"/>
+            <rect y="22" width="200" height="70" fill="#0284c7" opacity="0.7"/>
+            <rect y="92" width="200" height="38" fill="#451a03"/>
+            <ellipse cx="100" cy="108" rx="14" ry="7" fill="#65a30d"/>
+            <line x1="90" y1="105" x2="85" y2="99" stroke="#365314" stroke-width="2"/>
+            <line x1="110" y1="105" x2="115" y2="99" stroke="#365314" stroke-width="2"/>
+          </svg>`,
+        df_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="25" fill="#bae6fd"/>
+            <rect y="25" width="200" height="105" fill="#0369a1"/>
+            <g transform="translate(100, 75)">
+              <ellipse cx="0" cy="0" rx="16" ry="8" fill="#4d7c0f"/>
+              <circle cx="12" cy="0" r="4" fill="#65a30d"/>
+            </g>
+          </svg>`,
+
+        // BUTTERFLIES
+        bf_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <circle cx="60" cy="85" r="24" fill="#f43f5e"/>
+            <circle cx="60" cy="85" r="11" fill="#fde047"/>
+            <g transform="translate(100, 40)">
+              <ellipse cx="25" cy="-5" rx="20" ry="14" fill="#f97316"/>
+              <ellipse cx="20" cy="15" rx="14" ry="10" fill="#ea580c"/>
+              <ellipse cx="0" cy="10" rx="4" ry="16" fill="#1e293b"/>
+              <path d="M -2,22 Q -20,38 -38,44" stroke="#0f172a" stroke-width="2.5" fill="none"/>
+            </g>
+          </svg>`,
+        bf_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 20,40 Q 100,20 180,60 Q 120,110 30,90 Z" fill="#4ade80"/>
+            <circle cx="100" cy="60" r="3.5" fill="#fef08a" stroke="#ca8a04"/>
+            <circle cx="110" cy="58" r="3.5" fill="#fef08a" stroke="#ca8a04"/>
+            <circle cx="120" cy="62" r="3.5" fill="#fef08a" stroke="#ca8a04"/>
+            <g transform="translate(60, 50) scale(0.6)">
+              <ellipse cx="0" cy="0" rx="20" ry="14" fill="#f97316"/>
+            </g>
+          </svg>`,
+        bf_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <path d="M 20,110 C 40,25 140,15 180,45 C 170,75 150,70 145,85 C 135,80 125,95 115,90 C 80,120 40,120 20,110 Z" fill="#4ade80" stroke="#16a34a" stroke-width="3"/>
+            <circle cx="50" cy="75" r="8" fill="#22c55e" stroke="#15803d"/>
+            <circle cx="63" cy="71" r="8.5" fill="#22c55e" stroke="#15803d"/>
+            <circle cx="77" cy="69" r="9" fill="#22c55e" stroke="#15803d"/>
+            <circle cx="91" cy="70" r="8" fill="#84cc16" stroke="#15803d"/>
+            <circle cx="104" cy="73" r="7.5" fill="#84cc16"/>
+          </svg>`,
+        bf_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <circle cx="170" cy="25" r="16" fill="#f59e0b"/>
+            <g transform="translate(90, 60)">
+              <path d="M 0,-10 C -20,-30 -40,-20 -35,0 C -30,15 -10,10 0,5 Z" fill="#f97316"/>
+              <path d="M 0,-10 C 20,-30 40,-20 35,0 C 30,15 10,10 0,5 Z" fill="#f97316"/>
+              <ellipse cx="0" cy="0" rx="3" ry="12" fill="#1e293b"/>
+            </g>
+          </svg>`,
+        bf_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <circle cx="180" cy="100" r="20" fill="#f59e0b"/>
+            <g transform="translate(40, 35)">
+              <ellipse cx="0" cy="0" rx="14" ry="10" fill="#f97316"/>
+            </g>
+            <g transform="translate(85, 25)">
+              <ellipse cx="0" cy="0" rx="16" ry="11" fill="#f97316"/>
+            </g>
+            <g transform="translate(130, 45)">
+              <ellipse cx="0" cy="0" rx="14" ry="10" fill="#f97316"/>
+            </g>
+          </svg>`,
+        bf_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <rect x="30" y="0" width="40" height="130" fill="#78350f"/>
+            <g transform="translate(85, 50)">
+              <ellipse cx="0" cy="0" rx="16" ry="12" fill="#ea580c"/>
+            </g>
+            <g transform="translate(85, 80)">
+              <ellipse cx="0" cy="0" rx="16" ry="12" fill="#ea580c"/>
+            </g>
+          </svg>`,
+        bf_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <line x1="20" y1="25" x2="180" y2="40" stroke="#78350f" stroke-width="7"/>
+            <line x1="100" y1="35" x2="100" y2="55" stroke="#000" stroke-width="2"/>
+            <path d="M 92,55 C 90,80 96,100 100,110 C 104,100 110,80 108,55 Z" fill="#15803d" stroke="#166534" stroke-width="2"/>
+          </svg>`,
+        bf_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <ellipse cx="100" cy="70" rx="25" ry="35" fill="#166534" opacity="0.4"/>
+            <g transform="translate(100, 70) scale(0.6)">
+              <ellipse cx="0" cy="0" rx="18" ry="12" fill="#f97316"/>
+            </g>
+          </svg>`,
+
+        // FROGS
+        fg_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <rect y="75" width="200" height="55" fill="#38bdf8"/>
+            <ellipse cx="100" cy="90" rx="55" ry="15" fill="#15803d"/>
+            <ellipse cx="100" cy="74" rx="18" ry="15" fill="#22c55e"/>
+            <circle cx="100" cy="84" r="13" fill="#bbf7d0" stroke="#16a34a" stroke-width="2"/>
+          </svg>`,
+        fg_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <rect width="200" height="130" fill="#38bdf8" opacity="0.6"/>
+            <circle cx="80" cy="65" r="7" fill="#e0f2fe" stroke="#0284c7"/>
+            <circle cx="80" cy="65" r="2.5" fill="#000"/>
+            <circle cx="95" cy="70" r="7" fill="#e0f2fe" stroke="#0284c7"/>
+            <circle cx="95" cy="70" r="2.5" fill="#000"/>
+            <circle cx="110" cy="65" r="7" fill="#e0f2fe" stroke="#0284c7"/>
+            <circle cx="110" cy="65" r="2.5" fill="#000"/>
+          </svg>`,
+        fg_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#e0f2fe"/>
+            <ellipse cx="70" cy="55" rx="10" ry="7" fill="#1e293b"/>
+            <path d="M 60,55 Q 40,50 30,62" stroke="#1e293b" stroke-width="3" fill="none"/>
+            <ellipse cx="115" cy="80" rx="12" ry="8" fill="#1e293b"/>
+            <line x1="108" y1="86" x2="102" y2="95" stroke="#15803d" stroke-width="2"/>
+            <path d="M 103,80 Q 85,90 72,77" stroke="#1e293b" stroke-width="3.5" fill="none"/>
+          </svg>`,
+        fg_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#e0f2fe"/>
+            <rect y="80" width="200" height="50" fill="#0284c7"/>
+            <ellipse cx="130" cy="90" rx="25" ry="6" fill="#7dd3fc"/>
+            <g transform="translate(100, 50) rotate(-30)">
+              <ellipse cx="0" cy="0" rx="18" ry="12" fill="#22c55e"/>
+              <line x1="-15" y1="5" x2="-30" y2="15" stroke="#15803d" stroke-width="3"/>
+            </g>
+          </svg>`,
+        fg_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <path d="M 0,105 Q 100,95 200,115 L 200,130 L 0,130 Z" fill="#78350f"/>
+            <ellipse cx="50" cy="92" rx="22" ry="15" fill="#22c55e" stroke="#15803d" stroke-width="2"/>
+            <path d="M 66,90 Q 110,70 155,65" stroke="#f43f5e" stroke-width="4" fill="none" stroke-linecap="round"/>
+            <circle cx="163" cy="63" r="3" fill="#0f172a"/>
+          </svg>`,
+        fg_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#0284c7"/>
+            <rect y="100" width="200" height="30" fill="#451a03"/>
+            <g transform="translate(100, 60) rotate(45)">
+              <ellipse cx="0" cy="0" rx="16" ry="11" fill="#15803d"/>
+            </g>
+          </svg>`,
+        fg_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="25" fill="#bae6fd"/>
+            <rect y="25" width="200" height="50" fill="#38bdf8" opacity="0.6"/>
+            <rect y="75" width="200" height="55" fill="#78350f"/>
+            <ellipse cx="100" cy="98" rx="20" ry="13" fill="#15803d"/>
+            <path d="M 94,92 Q 98,96 102,92" stroke="#000" stroke-width="2" fill="none"/>
+          </svg>`,
+        fg_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#0369a1"/>
+            <ellipse cx="100" cy="65" rx="22" ry="15" fill="#15803d"/>
+            <circle cx="85" cy="55" r="4" fill="#7dd3fc" opacity="0.8"/>
+            <circle cx="115" cy="55" r="4" fill="#7dd3fc" opacity="0.8"/>
+          </svg>`,
+
+        // BEES
+        bee_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <circle cx="60" cy="80" r="26" fill="#fda4af"/>
+            <circle cx="60" cy="80" r="13" fill="#fde047"/>
+            <g transform="translate(100, 55)">
+              <ellipse cx="10" cy="10" rx="18" ry="13" fill="#fbbf24"/>
+              <line x1="5" y1="-2" x2="5" y2="22" stroke="#1e293b" stroke-width="4"/>
+              <ellipse cx="2" cy="22" rx="6" ry="5" fill="#eab308" stroke="#ca8a04" stroke-width="2"/>
+            </g>
+          </svg>`,
+        bee_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <circle cx="140" cy="75" r="24" fill="#c084fc"/>
+            <g transform="translate(70, 60)">
+              <ellipse cx="0" cy="0" rx="16" ry="12" fill="#fbbf24"/>
+              <path d="M 16,0 Q 30,5 45,15" stroke="#1e293b" stroke-width="2" fill="none"/>
+            </g>
+          </svg>`,
+        bee_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <g fill="#fef08a" stroke="#ca8a04" stroke-width="2">
+              <polygon points="50,35 65,27 80,35 80,53 65,61 50,53"/>
+              <polygon points="80,35 95,27 110,35 110,53 95,61 80,53"/>
+              <polygon points="65,61 80,53 95,61 95,79 80,87 65,79"/>
+            </g>
+            <path d="M 80,70 C 80,90 86,90 86,70 Z" fill="#f59e0b"/>
+            <ellipse cx="40" cy="80" rx="14" ry="10" fill="#fbbf24"/>
+          </svg>`,
+        bee_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <rect x="20" y="20" width="160" height="90" fill="#ca8a04" rx="8"/>
+            <ellipse cx="100" cy="65" rx="18" ry="13" fill="#fbbf24"/>
+            <ellipse cx="90" cy="45" rx="14" ry="6" fill="#e0f2fe" opacity="0.8"/>
+            <ellipse cx="110" cy="45" rx="14" ry="6" fill="#e0f2fe" opacity="0.8"/>
+          </svg>`,
+        bee_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <text x="20" y="30" font-size="14" fill="#ea580c">🍂</text>
+            <circle cx="80" cy="90" r="18" fill="#c084fc"/>
+            <ellipse cx="115" cy="65" rx="14" ry="10" fill="#fbbf24"/>
+          </svg>`,
+        bee_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <rect x="40" y="20" width="120" height="90" fill="#b45309" rx="8"/>
+            <line x1="90" y1="40" x2="90" y2="80" stroke="#451a03" stroke-width="4"/>
+            <ellipse cx="100" cy="60" rx="14" ry="10" fill="#fbbf24"/>
+          </svg>`,
+        bee_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <rect x="40" y="20" width="120" height="90" fill="#d97706" rx="6" stroke="#92400e" stroke-width="3"/>
+            <circle cx="100" cy="75" r="26" fill="#fef08a" stroke="#ca8a04" stroke-width="2"/>
+            <circle cx="100" cy="75" r="6" fill="#f59e0b"/>
+          </svg>`,
+        bee_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <g transform="translate(100, 65)">
+              <ellipse cx="0" cy="0" rx="20" ry="15" fill="#fbbf24"/>
+              <ellipse cx="-10" cy="-12" rx="10" ry="5" fill="#e0f2fe"/>
+              <ellipse cx="10" cy="-12" rx="10" ry="5" fill="#e0f2fe"/>
+            </g>
+          </svg>`,
+
+        // BEETLES
+        bt_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <rect y="90" width="200" height="40" fill="#78350f"/>
+            <ellipse cx="50" cy="90" rx="30" ry="8" fill="#65a30d"/>
+            <ellipse cx="140" cy="90" rx="35" ry="8" fill="#65a30d"/>
+            <ellipse cx="100" cy="82" rx="18" ry="13" fill="#0d9488" stroke="#115e59" stroke-width="2"/>
+            <circle cx="116" cy="82" r="5" fill="#042f2e"/>
+          </svg>`,
+        bt_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#78350f"/>
+            <circle cx="90" cy="70" r="4" fill="#ffffff"/>
+            <circle cx="100" cy="72" r="4" fill="#ffffff"/>
+            <circle cx="110" cy="70" r="4" fill="#ffffff"/>
+            <ellipse cx="60" cy="65" rx="16" ry="11" fill="#0f766e"/>
+          </svg>`,
+        bt_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <rect x="20" y="0" width="70" height="130" fill="#78350f"/>
+            <path d="M 90,35 Q 100,55 90,75" stroke="#f59e0b" stroke-width="8" fill="none" stroke-linecap="round"/>
+            <ellipse cx="120" cy="75" rx="20" ry="14" fill="#312e81"/>
+            <path d="M 100,70 Q 85,55 95,45" stroke="#1e1b4b" stroke-width="4" fill="none" stroke-linecap="round"/>
+          </svg>`,
+        bt_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#1e1b4b"/>
+            <circle cx="170" cy="30" r="14" fill="#fde047"/>
+            <g transform="translate(100, 70)">
+              <ellipse cx="0" cy="0" rx="18" ry="14" fill="#0f766e"/>
+              <ellipse cx="-15" cy="-8" rx="14" ry="6" fill="#38bdf8" opacity="0.8"/>
+              <ellipse cx="15" cy="-8" rx="14" ry="6" fill="#38bdf8" opacity="0.8"/>
+            </g>
+          </svg>`,
+        bt_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <rect x="30" y="55" width="140" height="35" rx="8" fill="#451a03"/>
+            <ellipse cx="60" cy="102" rx="12" ry="9" fill="#1e293b"/>
+            <ellipse cx="130" cy="102" rx="12" ry="9" fill="#1e293b"/>
+          </svg>`,
+        bt_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#78350f"/>
+            <path d="M 40,80 Q 90,50 140,80" stroke="#451a03" stroke-width="12" fill="none"/>
+            <ellipse cx="85" cy="80" rx="14" ry="10" fill="#042f2e"/>
+          </svg>`,
+        bt_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="25" fill="#e0f2fe"/>
+            <rect y="25" width="200" height="105" fill="#451a03"/>
+            <path d="M 110,75 C 80,70 75,105 110,100" stroke="#f1f5f9" stroke-width="12" fill="none" stroke-linecap="round"/>
+            <circle cx="112" cy="73" r="4.5" fill="#92400e"/>
+          </svg>`,
+        bt_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0f9ff"/>
+            <rect x="50" y="20" width="100" height="90" fill="#451a03"/>
+            <ellipse cx="100" cy="65" rx="16" ry="12" fill="#0d9488"/>
+          </svg>`,
+
+        // STICK INSECTS
+        st_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <line x1="20" y1="100" x2="180" y2="35" stroke="#16a34a" stroke-width="5"/>
+            <ellipse cx="80" cy="72" rx="6" ry="4" fill="#78350f"/>
+            <line x1="86" y1="70" x2="115" y2="58" stroke="#84cc16" stroke-width="3" stroke-linecap="round"/>
+          </svg>`,
+        st_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#f0fdf4"/>
+            <path d="M 40,30 Q 120,20 160,70 Q 100,110 40,30 Z" fill="#4ade80"/>
+            <line x1="120" y1="50" x2="155" y2="70" stroke="#65a30d" stroke-width="3"/>
+          </svg>`,
+        st_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <line x1="30" y1="25" x2="170" y2="105" stroke="#78350f" stroke-width="6"/>
+            <path d="M 20,55 Q 60,45 90,60 M 100,75 Q 140,65 170,80" stroke="#38bdf8" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+            <line x1="70" y1="50" x2="125" y2="85" stroke="#65a30d" stroke-width="4.5" stroke-linecap="round"/>
+          </svg>`,
+        st_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <line x1="20" y1="65" x2="180" y2="65" stroke="#78350f" stroke-width="5"/>
+            <line x1="70" y1="65" x2="130" y2="65" stroke="#65a30d" stroke-width="4"/>
+          </svg>`,
+        st_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <line x1="10" y1="30" x2="190" y2="30" stroke="#78350f" stroke-width="6"/>
+            <line x1="60" y1="27" x2="120" y2="27" stroke="#65a30d" stroke-width="4"/>
+            <circle cx="95" cy="50" r="3" fill="#78350f"/>
+            <circle cx="105" cy="70" r="3" fill="#78350f"/>
+            <circle cx="98" cy="90" r="3" fill="#78350f"/>
+            <rect y="105" width="200" height="25" fill="#9a3412"/>
+          </svg>`,
+        st_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fff7ed"/>
+            <line x1="20" y1="90" x2="180" y2="40" stroke="#78350f" stroke-width="6"/>
+            <line x1="80" y1="72" x2="130" y2="55" stroke="#92400e" stroke-width="4.5"/>
+          </svg>`,
+        st_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="35" fill="#e0f2fe"/>
+            <rect y="35" width="200" height="95" fill="#78350f"/>
+            <circle cx="70" cy="75" r="5" fill="#451a03" stroke="#facc15" stroke-width="1.5"/>
+            <circle cx="120" cy="90" r="5" fill="#451a03" stroke="#facc15" stroke-width="1.5"/>
+          </svg>`,
+        st_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#e0f2fe"/>
+            <circle cx="100" cy="65" r="14" fill="#451a03" stroke="#0284c7" stroke-width="2"/>
+          </svg>`,
+
+        // FISH
+        fish_spring_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#38bdf8" opacity="0.6"/>
+            <path d="M 40,130 Q 55,75 45,20 M 60,130 Q 70,65 65,25" stroke="#16a34a" stroke-width="4" fill="none"/>
+            <circle cx="50" cy="60" r="4" fill="#e0f2fe" stroke="#0284c7"/>
+            <circle cx="56" cy="57" r="4" fill="#e0f2fe" stroke="#0284c7"/>
+            <circle cx="52" cy="67" r="4" fill="#e0f2fe" stroke="#0284c7"/>
+            <ellipse cx="140" cy="70" rx="22" ry="13" fill="#f97316"/>
+          </svg>`,
+        fish_spring_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#7dd3fc"/>
+            <circle cx="170" cy="25" r="16" fill="#fde047"/>
+            <ellipse cx="90" cy="75" rx="24" ry="14" fill="#f97316"/>
+            <polygon points="66,75 54,67 58,75 54,83" fill="#ea580c"/>
+          </svg>`,
+        fish_summer_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#fefce8"/>
+            <rect y="75" width="200" height="55" fill="#0284c7"/>
+            <ellipse cx="100" cy="75" rx="35" ry="6" fill="#7dd3fc"/>
+            <circle cx="115" cy="30" r="3" fill="#0f172a"/>
+            <g transform="translate(100, 45) rotate(-35)">
+              <ellipse cx="0" cy="0" rx="20" ry="11" fill="#f97316"/>
+              <polygon points="-20,0 -30,-7 -26,0 -30,7" fill="#ea580c"/>
+            </g>
+          </svg>`,
+        fish_summer_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#0284c7"/>
+            <ellipse cx="90" cy="30" rx="55" ry="12" fill="#15803d"/>
+            <ellipse cx="90" cy="75" rx="22" ry="13" fill="#f97316" opacity="0.9"/>
+          </svg>`,
+        fish_autumn_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#0284c7" opacity="0.8"/>
+            <rect y="105" width="200" height="25" fill="#64748b"/>
+            <g transform="translate(90, 80)">
+              <ellipse cx="0" cy="0" rx="24" ry="14" fill="#f97316"/>
+              <circle cx="15" cy="-2" r="3" fill="#fff"/>
+              <circle cx="16" cy="-2" r="1.5" fill="#000"/>
+            </g>
+          </svg>`,
+        fish_autumn_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#0369a1"/>
+            <g transform="translate(110, 85)">
+              <ellipse cx="0" cy="0" rx="22" ry="12" fill="#f97316"/>
+            </g>
+          </svg>`,
+        fish_winter_0: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="28" fill="#bae6fd"/>
+            <rect y="28" width="200" height="102" fill="#0369a1"/>
+            <ellipse cx="90" cy="95" rx="24" ry="12" fill="#f97316" opacity="0.9"/>
+            <polygon points="66,95 54,87 58,95 54,103" fill="#ea580c"/>
+          </svg>`,
+        fish_winter_1: `
+          <svg viewBox="0 0 200 130" class="w-full h-full">
+            <rect width="200" height="130" fill="#082f49"/>
+            <ellipse cx="100" cy="70" rx="26" ry="13" fill="#ea580c" opacity="0.7"/>
+          </svg>`
+      }
+    };
+
+    /**
+     * Database: 10 Animals, 4 Seasons Each, Exactly 2 or 3 Activities per Season
+     * Every single activity has an exact corresponding SVG key in SceneArt.actionPics!
+     */
+    const animalsData = [
+      // 1. LADYBUG
+      {
+        id: "ladybug",
+        name: "Ladybug",
+        category: "insect",
+        categoryName: "Tiny Insect",
+        badge: "🐞",
+        phonics: "LAY-dee-bug",
+        funFact: "Ladybugs are small red beetles with black spots. They protect gardens by eating tiny pests!",
+        seasons: {
+          spring: {
+            headline: "Spring: Waking Up & Laying Eggs",
+            description: "Warm spring days bring sunshine and fresh green leaves.",
+            activities: [
+              {
+                picKey: "lb_spring_0",
+                title: "Waking Up and Eating",
+                sentence: "In spring, the ladybug wakes up and eats tiny green bugs on fresh leaves.",
+                badge: "Eating Bugs",
+                keyword: "Wakes up",
+                hint: "Look at the red ladybug crawling on the green leaf to eat tiny bugs."
+              },
+              {
+                picKey: "lb_spring_1",
+                title: "Laying Tiny Yellow Eggs",
+                sentence: "The mother ladybug lays tiny yellow eggs under a safe green leaf.",
+                badge: "Laying Eggs",
+                keyword: "Eggs",
+                hint: "Look under the leaf to see tiny yellow eggs protected from rain."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Flying and Exploring",
+            description: "Summer is hot and bright with lots of colorful blossoms.",
+            activities: [
+              {
+                picKey: "lb_summer_0",
+                title: "Flying to Garden Flowers",
+                sentence: "In summer, the ladybug opens its red shell and flies to colorful flowers.",
+                badge: "Flying High",
+                keyword: "Flies",
+                hint: "The red shell opens so clear wings can fly in the warm air."
+              },
+              {
+                picKey: "lb_summer_1",
+                title: "Hunting in the Warm Sun",
+                sentence: "The ladybug hunts for aphids all day in the bright summer sunshine.",
+                badge: "Hunting Bugs",
+                keyword: "Hunts",
+                hint: "The ladybug walks quickly on sunny garden stems to find food."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Finding Warm Stones",
+            description: "The air turns cool and orange leaves drop to the ground.",
+            activities: [
+              {
+                picKey: "lb_autumn_0",
+                title: "Gathering on Sunny Stones",
+                sentence: "In autumn, ladybugs gather together on warm rocks and sunny walls.",
+                badge: "Warm Rocks",
+                keyword: "Gather",
+                hint: "Ladybugs sit close together on warm stones to catch the last sunshine."
+              },
+              {
+                picKey: "lb_autumn_1",
+                title: "Looking for Winter Shelters",
+                sentence: "Ladybugs crawl under dry brown leaves to look for a safe place to hide.",
+                badge: "Finding Shelter",
+                keyword: "Shelter",
+                hint: "Look at the ladybug crawling under dry leaves before winter cold arrives."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Deep Sleep Under Tree Bark",
+            description: "Snow blankets the ground and ladybugs stay asleep.",
+            activities: [
+              {
+                picKey: "lb_winter_0",
+                title: "Sleeping Inside Tree Bark",
+                sentence: "In winter, ladybugs sleep inside tree bark to hide from cold snow.",
+                badge: "Winter Sleep",
+                keyword: "Hibernate",
+                hint: "Ladybugs rest in tree cracks where freezing winter wind cannot touch them."
+              },
+              {
+                picKey: "lb_winter_1",
+                title: "Clustering Together for Warmth",
+                sentence: "Many ladybugs sleep close together in a group to stay warm all winter.",
+                badge: "Sleeping Group",
+                keyword: "Cluster",
+                hint: "A cozy group of ladybugs stays together until spring comes back."
+              }
+            ]
+          }
+        }
+      },
+
+      // 2. SPARROWS
+      {
+        id: "sparrows",
+        name: "Sparrows",
+        category: "bird",
+        categoryName: "Songbird",
+        badge: "🐦",
+        phonics: "SPAIR-oh",
+        funFact: "Sparrows are cheerful brown birds that love hopping in parks, trees, and gardens!",
+        seasons: {
+          spring: {
+            headline: "Spring: Building Round Twig Nests",
+            description: "Spring brings twigs and baby birds.",
+            activities: [
+              {
+                picKey: "sp_spring_0",
+                title: "Carrying Twigs in Beaks",
+                sentence: "In spring, sparrows carry twigs and dry grass to build round nests.",
+                badge: "Twig Nest",
+                keyword: "Nest",
+                hint: "The brown bird carries a twig in its beak to build a cozy home."
+              },
+              {
+                picKey: "sp_spring_1",
+                title: "Feeding Hungry Baby Birds",
+                sentence: "Mother sparrow feeds tiny insects to her chirping baby birds in the nest.",
+                badge: "Feeding Babies",
+                keyword: "Chirping",
+                hint: "The baby birds open their beaks wide in the nest to eat food."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Splashing & Dust Baths",
+            description: "Summer is sunny, warm, and full of bird songs.",
+            activities: [
+              {
+                picKey: "sp_summer_0",
+                title: "Taking a Warm Dust Bath",
+                sentence: "In summer, the sparrow flaps in warm garden dirt to clean its feathers.",
+                badge: "Dust Bath",
+                keyword: "Dust bath",
+                hint: "The sparrow flaps its wings happily in dry soil to stay clean."
+              },
+              {
+                picKey: "sp_summer_1",
+                title: "Splashing in Shallow Water",
+                sentence: "Sparrows splash in cool puddles to cool down on hot sunny days.",
+                badge: "Water Splash",
+                keyword: "Splash",
+                hint: "Look at the bird splashing water droplets with its wings."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Hunting for Ground Seeds",
+            description: "Leaves fall to the ground and seeds are everywhere.",
+            activities: [
+              {
+                picKey: "sp_autumn_0",
+                title: "Pecking Fallen Plant Seeds",
+                sentence: "In autumn, sparrows hop on the ground to pick up seeds under leaves.",
+                badge: "Eating Seeds",
+                keyword: "Seeds",
+                hint: "The sparrow bends down to peck yellow seeds off the brown ground."
+              },
+              {
+                picKey: "sp_autumn_1",
+                title: "Flocking with Bird Friends",
+                sentence: "Sparrows fly together in noisy flocks to search for food in bushes.",
+                badge: "Bird Flock",
+                keyword: "Flock",
+                hint: "A group of cheerful sparrows hops and chirps together in the bushes."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Puffed Up Like a Soft Ball",
+            description: "Cold snow falls on bare tree branches.",
+            activities: [
+              {
+                picKey: "sp_winter_0",
+                title: "Puffing Feathers in the Snow",
+                sentence: "In winter, the sparrow puffs its feathers to look like a round ball in the snow.",
+                badge: "Puffy Ball",
+                keyword: "Puff feathers",
+                hint: "The sparrow fluffs its feathers to trap warm body heat in the snow."
+              },
+              {
+                picKey: "sp_winter_1",
+                title: "Searching for Food on Snow",
+                sentence: "Sparrows hop across the cold snow to find leftover berry seeds.",
+                badge: "Snow Hopping",
+                keyword: "Berries",
+                hint: "Look at the small bird tracks in the white snow near berry bushes."
+              }
+            ]
+          }
+        }
+      },
+
+      // 3. ANTS
+      {
+        id: "ants",
+        name: "Ants",
+        category: "insect",
+        categoryName: "Hardworking Insect",
+        badge: "🐜",
+        phonics: "ANTS",
+        funFact: "Ants can lift things 20 times heavier than their own bodies! They work together as a team.",
+        seasons: {
+          spring: {
+            headline: "Spring: Marching Out of the Hill",
+            description: "Warm sun warms the dirt and worker ants wake up.",
+            activities: [
+              {
+                picKey: "ant_spring_0",
+                title: "Marching into the Sunshine",
+                sentence: "In spring, worker ants come out of the dark nest hole into the warm sun.",
+                badge: "Marching Out",
+                keyword: "Nest hole",
+                hint: "Ants walk out of their underground hill to explore the warm soil."
+              },
+              {
+                picKey: "ant_spring_1",
+                title: "Repairing the Soil Mound",
+                sentence: "Ants carry tiny bits of dirt to fix their mound after spring rain.",
+                badge: "Fixing Mound",
+                keyword: "Repair",
+                hint: "Workers carry little soil crumbs to build a strong ant hill."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Carrying Big Food",
+            description: "Summer is hot and busy for the ant colony.",
+            activities: [
+              {
+                picKey: "ant_summer_0",
+                title: "Carrying Leaves Over Heads",
+                sentence: "In summer, strong ants carry heavy green leaves over their heads to the nest.",
+                badge: "Carrying Leaf",
+                keyword: "Carry",
+                hint: "The tiny ant holds a green leaf piece bigger than its entire body!"
+              },
+              {
+                picKey: "ant_summer_1",
+                title: "Following Scent Trails",
+                sentence: "Ants walk in neat lines following scent trails to find sweet fruit.",
+                badge: "Ant Line",
+                keyword: "Trail",
+                hint: "Ants walk one behind another in a straight line toward food."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Storing Seeds Underground",
+            description: "Days get cooler and ants prepare their pantry.",
+            activities: [
+              {
+                picKey: "ant_autumn_0",
+                title: "Filling Seed Storage Rooms",
+                sentence: "In autumn, ants store lots of seeds deep in underground rooms.",
+                badge: "Seed Room",
+                keyword: "Store",
+                hint: "Under the dirt, underground rooms are packed with seeds for winter."
+              },
+              {
+                picKey: "ant_autumn_1",
+                title: "Closing the Nest Entrance",
+                sentence: "Ants seal the top of their nest with dirt to keep cold autumn wind out.",
+                badge: "Sealing Door",
+                keyword: "Seal",
+                hint: "The ants cover their door hole with twigs and soil to stay cozy."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Cozy Huddle Deep in Soil",
+            description: "Freezing frost hardens the top of the ground.",
+            activities: [
+              {
+                picKey: "ant_winter_0",
+                title: "Huddling in Deep Earth",
+                sentence: "In winter, ants huddle together deep underground where the cold cannot reach them.",
+                badge: "Warm Huddle",
+                keyword: "Huddle",
+                hint: "Far below the snow, the ants stay close together in the warm earth."
+              },
+              {
+                picKey: "ant_winter_1",
+                title: "Resting Quietly Near Queen",
+                sentence: "Worker ants rest quietly around the queen ant until the warm spring arrives.",
+                badge: "Resting Workers",
+                keyword: "Queen ant",
+                hint: "The ant colony rests quietly in the dark underground tunnel."
+              }
+            ]
+          }
+        }
+      },
+
+      // 4. DRAGONFLIES
+      {
+        id: "dragonflies",
+        name: "Dragonflies",
+        category: "insect",
+        categoryName: "Flying Insect",
+        badge: "🪰",
+        phonics: "DRAG-un-fly",
+        funFact: "Dragonflies have four wings and huge eyes! They can fly forwards, backwards, and hover.",
+        seasons: {
+          spring: {
+            headline: "Spring: Crawling Out of Pond Water",
+            description: "Young dragonflies climb up tall water reeds.",
+            activities: [
+              {
+                picKey: "df_spring_0",
+                title: "Climbing Up Green Reeds",
+                sentence: "In spring, a young dragonfly crawls out of the pond water onto a green reed.",
+                badge: "Climbs Stalk",
+                keyword: "Crawl out",
+                hint: "The young bug climbs out of the water onto a green plant in the air."
+              },
+              {
+                picKey: "df_spring_1",
+                title: "Drying New Shiny Wings",
+                sentence: "The dragonfly spreads its four clear wings in the sunshine until they dry.",
+                badge: "Drying Wings",
+                keyword: "Wings",
+                hint: "Clear wings unfold and sparkle in the warm spring sunshine."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Hovering Over Pond Water",
+            description: "Bright sunny skies allow fast aerial hunting.",
+            activities: [
+              {
+                picKey: "df_summer_0",
+                title: "Hovering in the Warm Air",
+                sentence: "In summer, the dragonfly hovers in the warm air and catches flies with its feet.",
+                badge: "Hovering ✈️",
+                keyword: "Hover",
+                hint: "The dragonfly stops in mid-air like a little helicopter above the water."
+              },
+              {
+                picKey: "df_summer_1",
+                title: "Zipping Across the Pond",
+                sentence: "Dragonflies zoom super fast over water lily pads to chase other insects.",
+                badge: "Fast Zoom",
+                keyword: "Zoom",
+                hint: "Look at the dragonfly flying quickly over the round green lily pads."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Laying Eggs in Cool Water",
+            description: "Cooler autumn breezes blow over the pond.",
+            activities: [
+              {
+                picKey: "df_autumn_0",
+                title: "Dipping Tail to Lay Eggs",
+                sentence: "In autumn, the mother dragonfly dips its tail into the cool pond to lay eggs.",
+                badge: "Egg Dipping",
+                keyword: "Dip tail",
+                hint: "The dragonfly touches the water surface gently to release tiny eggs."
+              },
+              {
+                picKey: "df_autumn_1",
+                title: "Resting on Warm Rocks",
+                sentence: "Dragonflies sit on sunlit rocks around the pond to warm their cold wings.",
+                badge: "Warm Wings",
+                keyword: "Sunlit rock",
+                hint: "The dragonfly rests still on a warm grey rock beside the water."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Resting Safe in Pond Mud",
+            description: "A sheet of ice forms over the pond.",
+            activities: [
+              {
+                picKey: "df_winter_0",
+                title: "Resting in Soft Mud",
+                sentence: "In winter, baby dragonflies rest quietly in the soft mud under the pond ice.",
+                badge: "Mud Rest",
+                keyword: "Under ice",
+                hint: "Ice is on top, but the baby dragonfly rests safely in the bottom mud."
+              },
+              {
+                picKey: "df_winter_1",
+                title: "Waiting for Spring Thaw",
+                sentence: "The young nymph breathes underwater and waits for the winter ice to melt.",
+                badge: "Pond Nymph",
+                keyword: "Breathe",
+                hint: "Under the cold water, the young nymph stays safe until spring warmth."
+              }
+            ]
+          }
+        }
+      },
+
+      // 5. BUTTERFLIES
+      {
+        id: "butterflies",
+        name: "Butterflies",
+        category: "insect",
+        categoryName: "Colorful Flutterer",
+        badge: "🦋",
+        phonics: "BUT-ter-fly",
+        funFact: "Butterflies taste food using their feet and drink sweet nectar with a long curly straw tongue!",
+        seasons: {
+          spring: {
+            headline: "Spring: Drinking Sweet Flower Nectar",
+            description: "Gardens are filled with fresh colorful flowers.",
+            activities: [
+              {
+                picKey: "bf_spring_0",
+                title: "Drinking Sweet Nectar",
+                sentence: "In spring, the butterfly drinks sweet flower nectar through a long straw tongue.",
+                badge: "Sweet Nectar",
+                keyword: "Nectar",
+                hint: "The butterfly drinks sweet juice from the bright pink flower."
+              },
+              {
+                picKey: "bf_spring_1",
+                title: "Laying Eggs on Green Leaves",
+                sentence: "Mother butterfly lays tiny green eggs on leaves so baby caterpillars can eat.",
+                badge: "Leaf Eggs",
+                keyword: "Green eggs",
+                hint: "Look at the tiny round eggs stuck to the fresh green garden leaf."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Hungry Caterpillars Chewing",
+            description: "Warm summer days help caterpillars grow big.",
+            activities: [
+              {
+                picKey: "bf_summer_0",
+                title: "Chewing Holes in Big Leaves",
+                sentence: "In summer, a hungry green caterpillar chews and eats big green leaves all day.",
+                badge: "Chomp Leaf",
+                keyword: "Caterpillar",
+                hint: "The green caterpillar munches big round bite marks in the leaf."
+              },
+              {
+                picKey: "bf_summer_1",
+                title: "Fluttering in Bright Sunshine",
+                sentence: "Colorful butterflies flutter their big wings over sunny flower gardens.",
+                badge: "Fluttering",
+                keyword: "Flutter",
+                hint: "Orange and black wings gently flap from blossom to blossom."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Flying South Together",
+            description: "Chilly winds blow and leaves turn gold.",
+            activities: [
+              {
+                picKey: "bf_autumn_0",
+                title: "Monarchs Migrating South",
+                sentence: "In autumn, orange Monarch butterflies fly south together toward warm sunny lands.",
+                badge: "Fly South",
+                keyword: "Migrate",
+                hint: "A big group of orange butterflies travels together away from the cold."
+              },
+              {
+                picKey: "bf_autumn_1",
+                title: "Resting on Tree Trunks",
+                sentence: "Flocks of butterflies stop to rest together on tree branches during their trip.",
+                badge: "Tree Rest",
+                keyword: "Branch",
+                hint: "Many butterflies hang together on tree bark to sleep at night."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Quiet Sleep Inside Chrysalis",
+            description: "Snow blankets the garden while butterflies transform.",
+            activities: [
+              {
+                picKey: "bf_winter_0",
+                title: "Hanging from a Frosty Twig",
+                sentence: "In winter, the chrysalis hangs quietly from a twig all winter long.",
+                badge: "Chrysalis Sleep",
+                keyword: "Chrysalis",
+                hint: "The green and brown shell hangs quietly on a bare twig."
+              },
+              {
+                picKey: "bf_winter_1",
+                title: "Changing into a Butterfly",
+                sentence: "Inside the safe chrysalis shell, the caterpillar changes into a butterfly.",
+                badge: "Transformation",
+                keyword: "Change",
+                hint: "A wonderful transformation happens inside the sleeping shell."
+              }
+            ]
+          }
+        }
+      },
+
+      // 6. FROGS
+      {
+        id: "frogs",
+        name: "Frogs",
+        category: "water",
+        categoryName: "Green Amphibian",
+        badge: "🐸",
+        phonics: "FROGS",
+        funFact: "Frogs drink water through their skin! They have long legs that help them make giant leaps.",
+        seasons: {
+          spring: {
+            headline: "Spring: Singing on Floating Lily Pads",
+            description: "Ponds warm up and frogs start singing.",
+            activities: [
+              {
+                picKey: "fg_spring_0",
+                title: "Singing Loud Ribbit Songs",
+                sentence: "In spring, the green frog puffs its throat and sings 'Ribbit!' on a round lily pad.",
+                badge: "Ribbit Song",
+                keyword: "Ribbit",
+                hint: "The frog's throat blows up like a balloon to make a loud singing sound."
+              },
+              {
+                picKey: "fg_spring_1",
+                title: "Laying Jelly Eggs in Water",
+                sentence: "Mother frog lays floating jelly eggs in the quiet water near water weeds.",
+                badge: "Frog Eggs",
+                keyword: "Jelly eggs",
+                hint: "Clusters of soft clear jelly eggs float peacefully in the pond."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Tadpoles Swimming & Growing",
+            description: "Warm summer ponds are full of wiggly tadpoles.",
+            activities: [
+              {
+                picKey: "fg_summer_0",
+                title: "Tadpoles Growing Back Legs",
+                sentence: "In summer, baby tadpoles swim with wiggly tails and grow little back legs.",
+                badge: "Growing Legs",
+                keyword: "Tadpole",
+                hint: "The swimming tadpole has a long tail and two new tiny back legs!"
+              },
+              {
+                picKey: "fg_summer_1",
+                title: "Leaping into Pond Water",
+                sentence: "Young green frogs leap off muddy banks and splash into the warm pond.",
+                badge: "Big Leap",
+                keyword: "Leap",
+                hint: "Look at the frog jumping through the air with long back legs."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Catching Bugs with Sticky Tongue",
+            description: "Cool autumn nights arrive around the pond.",
+            activities: [
+              {
+                picKey: "fg_autumn_0",
+                title: "Snapping Flies with Sticky Tongue",
+                sentence: "In autumn, the frog shoots its long pink sticky tongue to catch flies fast.",
+                badge: "Zap Fly!",
+                keyword: "Sticky tongue",
+                hint: "The long pink tongue shoots out of the frog's mouth like a dart."
+              },
+              {
+                picKey: "fg_autumn_1",
+                title: "Swimming to Pond Bottom",
+                sentence: "Frogs swim down to the bottom of the pond as the water turns chilly.",
+                badge: "Pond Floor",
+                keyword: "Chilly",
+                hint: "The frog swims down toward the soft warm mud at the pond floor."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Sleeping Under Soft Pond Mud",
+            description: "Thick ice covers the pond while frogs sleep below.",
+            activities: [
+              {
+                picKey: "fg_winter_0",
+                title: "Buried Under Frozen Ice",
+                sentence: "In winter, the frog sleeps buried in soft mud at the bottom of the frozen pond.",
+                badge: "Sleeping in Mud",
+                keyword: "Buried in mud",
+                hint: "The frog keeps its eyes shut and sleeps in the mud under the ice."
+              },
+              {
+                picKey: "fg_winter_1",
+                title: "Breathing Gently Through Skin",
+                sentence: "The sleeping frog absorbs oxygen from the cold water right through its skin.",
+                badge: "Skin Breathing",
+                keyword: "Skin",
+                hint: "The frog rests still and breathes through its skin all winter long."
+              }
+            ]
+          }
+        }
+      },
+
+      // 7. BEES
+      {
+        id: "bees",
+        name: "Bees",
+        category: "insect",
+        categoryName: "Busy Honey Maker",
+        badge: "🐝",
+        phonics: "BEES",
+        funFact: "Bees dance inside the dark hive to tell their sisters exactly where to find tasty flowers!",
+        seasons: {
+          spring: {
+            headline: "Spring: Bright Yellow Pollen Baskets",
+            description: "Fruit trees and wildflowers blossom everywhere.",
+            activities: [
+              {
+                picKey: "bee_spring_0",
+                title: "Collecting Yellow Pollen",
+                sentence: "In spring, the honeybee carries bright yellow pollen powder on its back legs.",
+                badge: "Yellow Pollen",
+                keyword: "Pollen",
+                hint: "Look at the bee's back legs to spot the bright yellow balls of pollen."
+              },
+              {
+                picKey: "bee_spring_1",
+                title: "Sipping Sweet Flower Nectar",
+                sentence: "The bee drinks sweet nectar from spring blossoms and flies back to the hive.",
+                badge: "Flower Sip",
+                keyword: "Nectar",
+                hint: "The bee puts its head inside the flower petals to drink sweet juice."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Making Sweet Golden Honey",
+            description: "Summer is the busiest season in the warm beehive.",
+            activities: [
+              {
+                picKey: "bee_summer_0",
+                title: "Filling Hexagon Wax Cells",
+                sentence: "In summer, worker bees make sweet golden honey inside the wax honeycomb.",
+                badge: "Sweet Honey",
+                keyword: "Honey",
+                hint: "Golden honey fills each of the six-sided wax rooms inside the hive."
+              },
+              {
+                picKey: "bee_summer_1",
+                title: "Fanning Wings to Cool Hive",
+                sentence: "Worker bees fan their wings fast to blow cool air through the warm hive.",
+                badge: "Fanning Wings",
+                keyword: "Fan wings",
+                hint: "Bees flap their wings near the entrance to keep the hive from getting too hot."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Visiting Late Flowers",
+            description: "Autumn breezes blow through flower beds.",
+            activities: [
+              {
+                picKey: "bee_autumn_0",
+                title: "Visiting the Last Blossoms",
+                sentence: "In autumn, bees visit the last autumn flowers before the cold weather starts.",
+                badge: "Last Flowers",
+                keyword: "Last flowers",
+                hint: "The bee visits late purple flowers to collect final drops of food."
+              },
+              {
+                picKey: "bee_autumn_1",
+                title: "Sealing Cracks in the Hive",
+                sentence: "Bees use sticky tree resin to seal hive cracks and keep cold autumn winds out.",
+                badge: "Sealing Hive",
+                keyword: "Resin",
+                hint: "Worker bees patch holes in their wooden home to stay warm."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Tight Warm Hive Cluster",
+            description: "Snow blankets the wooden hive outside.",
+            activities: [
+              {
+                picKey: "bee_winter_0",
+                title: "Clustering Around the Queen",
+                sentence: "In winter, bees cluster into a tight warm ball inside the hive to keep the queen warm.",
+                badge: "Warm Ball",
+                keyword: "Cluster",
+                hint: "Thousands of bees hug together in a dense ball inside the hive."
+              },
+              {
+                picKey: "bee_winter_1",
+                title: "Shivering Wings for Heat",
+                sentence: "Bees shiver their tiny wing muscles to make heat and eat stored honey.",
+                badge: "Shivering",
+                keyword: "Shiver",
+                hint: "The bees vibrate their bodies like a little heater to stay warm."
+              }
+            ]
+          }
+        }
+      },
+
+      // 8. BEETLES
+      {
+        id: "beetles",
+        name: "Beetles",
+        category: "insect",
+        categoryName: "Armored Bug",
+        badge: "🪲",
+        phonics: "BEE-tuls",
+        funFact: "Beetles have hard front wing covers called elytra that act like a suit of metal armor!",
+        seasons: {
+          spring: {
+            headline: "Spring: Crawling on Fresh Green Moss",
+            description: "The spring soil warms up and beetles crawl out.",
+            activities: [
+              {
+                picKey: "bt_spring_0",
+                title: "Crawling Across Damp Soil",
+                sentence: "In spring, the shiny beetle crawls across green moss and damp forest soil.",
+                badge: "Crawls on Moss",
+                keyword: "Moss",
+                hint: "The shiny green beetle walks through soft moss with its six legs."
+              },
+              {
+                picKey: "bt_spring_1",
+                title: "Laying Eggs in Soft Earth",
+                sentence: "Mother beetle burrows into the rich spring soil to lay small white eggs.",
+                badge: "Soil Eggs",
+                keyword: "Burrows",
+                hint: "The beetle digs into damp dirt to hide its eggs safely."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Drinking Sweet Tree Sap",
+            description: "Warm summer days heat the tree trunks.",
+            activities: [
+              {
+                picKey: "bt_summer_0",
+                title: "Drinking from Tree Bark",
+                sentence: "In summer, the big rhinoceros beetle drinks sweet sap dripping from tree bark.",
+                badge: "Tree Sap",
+                keyword: "Tree sap",
+                hint: "The beetle with a big horn sips sticky sweet juice from the wood."
+              },
+              {
+                picKey: "bt_summer_1",
+                title: "Flying in the Warm Evening",
+                sentence: "Heavy beetles open their hard armor cases and buzz through the warm night air.",
+                badge: "Night Buzz",
+                keyword: "Armor",
+                hint: "The beetle lifts its shiny shell to buzz toward summer lights."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Hiding Under Damp Logs",
+            description: "Fallen leaves pile up on the forest floor.",
+            activities: [
+              {
+                picKey: "bt_autumn_0",
+                title: "Resting Under Rotten Logs",
+                sentence: "In autumn, the beetle hides under rotten logs to stay away from cold rain.",
+                badge: "Under Log",
+                keyword: "Rotten log",
+                hint: "Under the dark fallen log, beetles find a damp, cozy shelter."
+              },
+              {
+                picKey: "bt_autumn_1",
+                title: "Munching on Fallen Mulch",
+                sentence: "Beetles chew on decaying autumn leaves and wood to store body fat.",
+                badge: "Eating Mulch",
+                keyword: "Mulch",
+                hint: "The beetle eats bits of soft wood before winter arrives."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Sleeping Deep in Soil",
+            description: "Frost hardens the surface soil while beetles sleep below.",
+            activities: [
+              {
+                picKey: "bt_winter_0",
+                title: "Sleeping Beneath the Frost",
+                sentence: "In winter, the curled beetle grub sleeps deep in the soil beneath the frost.",
+                badge: "Deep Grub",
+                keyword: "Grub",
+                hint: "A white baby grub shaped like a letter C sleeps deep underground."
+              },
+              {
+                picKey: "bt_winter_1",
+                title: "Adults Asleep in Wood",
+                sentence: "Adult beetles sleep quietly inside dry hollow trees until warm spring sunshine returns.",
+                badge: "Wood Sleep",
+                keyword: "Hollow tree",
+                hint: "The armored beetle stays totally still inside the dry wood."
+              }
+            ]
+          }
+        }
+      },
+
+      // 9. STICK INSECTS
+      {
+        id: "stick-insects",
+        name: "Stick Insects",
+        category: "insect",
+        categoryName: "Camouflage Master",
+        badge: "🎋",
+        phonics: "STIK IN-sekts",
+        funFact: "Stick insects look just like real wooden twigs so hungry birds walk right past them!",
+        seasons: {
+          spring: {
+            headline: "Spring: Baby Hatching on Fresh Leaves",
+            description: "Tender new leaves appear in the forest.",
+            activities: [
+              {
+                picKey: "st_spring_0",
+                title: "Hatching from a Tiny Egg",
+                sentence: "In spring, a tiny green baby stick insect hatches from a small brown egg.",
+                badge: "Baby Hatches",
+                keyword: "Hatches",
+                hint: "A tiny green bug with long thin legs crawls out of a tiny seed-like egg."
+              },
+              {
+                picKey: "st_spring_1",
+                title: "Nibbling Soft Green Leaves",
+                sentence: "The young baby stick insect nibbles the edges of tender spring leaves.",
+                badge: "Nibbling Leaves",
+                keyword: "Nibbles",
+                hint: "The baby insect takes tiny bites out of fresh green leaves at night."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Swaying Like Twigs in the Wind",
+            description: "The summer forest is full of leafy green branches.",
+            activities: [
+              {
+                picKey: "st_summer_0",
+                title: "Pretending to Be a Windy Branch",
+                sentence: "In summer, the stick insect sways gently to look like a windy tree branch.",
+                badge: "Wind Sway",
+                keyword: "Camouflage",
+                hint: "The insect rocks back and forth just like a real leaf blowing in the wind."
+              },
+              {
+                picKey: "st_summer_1",
+                title: "Freezing Completely Still",
+                sentence: "When a bird flies nearby, the stick insect freezes and stays totally motionless.",
+                badge: "Still Twig",
+                keyword: "Motionless",
+                hint: "The long brown bug holds onto the branch and does not move at all."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Dropping Eggs to the Ground",
+            description: "Leaves turn brown and drop from trees.",
+            activities: [
+              {
+                picKey: "st_autumn_0",
+                title: "Dropping Seed-Like Eggs",
+                sentence: "In autumn, the mother stick insect drops tiny round eggs down onto the forest floor.",
+                badge: "Dropping Eggs",
+                keyword: "Drop eggs",
+                hint: "Tough little eggs that look like plant seeds fall gently into dry leaves."
+              },
+              {
+                picKey: "st_autumn_1",
+                title: "Blending with Brown Branches",
+                sentence: "The adult insect's color turns brown to match the dry autumn twigs.",
+                badge: "Color Match",
+                keyword: "Brown color",
+                hint: "The stick insect changes from green to brown to match the autumn trees."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Eggs Safe Under Snow",
+            description: "Cold winter covers the woods with a blanket of white snow.",
+            activities: [
+              {
+                picKey: "st_winter_0",
+                title: "Resting Under Snow Blankets",
+                sentence: "In winter, the eggs rest safely under the cold leaves and wait for spring warmth.",
+                badge: "Safe Eggs",
+                keyword: "Safe under snow",
+                hint: "The snow is cold on top, but the eggs stay safe under the blanket of leaves."
+              },
+              {
+                picKey: "st_winter_1",
+                title: "Tough Shells Protecting Babies",
+                sentence: "Tough outer shells protect the baby insects from freezing winter frost.",
+                badge: "Tough Shell",
+                keyword: "Frost",
+                hint: "The little egg shells keep the baby insect inside safe from ice."
+              }
+            ]
+          }
+        }
+      },
+
+      // 10. FISH
+      {
+        id: "fish",
+        name: "Fish",
+        category: "water",
+        categoryName: "Freshwater Swimmer",
+        badge: "🐟",
+        phonics: "FISH",
+        funFact: "Fish breathe underwater using gills! Deep pond water at the bottom stays warmer than top ice.",
+        seasons: {
+          spring: {
+            headline: "Spring: Eggs on Soft Water Plants",
+            description: "Melting snow warms the rivers and ponds.",
+            activities: [
+              {
+                picKey: "fish_spring_0",
+                title: "Laying Eggs on Water Weeds",
+                sentence: "In spring, fish lay tiny clear eggs on soft green water plants in the stream.",
+                badge: "Water Eggs",
+                keyword: "Clear eggs",
+                hint: "Tiny transparent bubble eggs stick safely to green underwater plants."
+              },
+              {
+                picKey: "fish_spring_1",
+                title: "Swimming in Sunlit Shallows",
+                sentence: "Fish swim into shallow sunny water where fresh aquatic plants are growing.",
+                badge: "Sunny Water",
+                keyword: "Shallows",
+                hint: "Fish splash their fins in the warm, bright shallow water."
+              }
+            ]
+          },
+          summer: {
+            headline: "Summer: Jumping to Catch Bugs",
+            description: "Warm summer ponds are full of swimming and hunting fish.",
+            activities: [
+              {
+                picKey: "fish_summer_0",
+                title: "Leaping Out of Pond Water",
+                sentence: "In summer, the fish jumps out of the water to catch bugs flying above the pond.",
+                badge: "Leaping Fish",
+                keyword: "Jumps",
+                hint: "Look at the orange fish jumping into the air to catch a buzzing fly!"
+              },
+              {
+                picKey: "fish_summer_1",
+                title: "Resting in Cool Plant Shade",
+                sentence: "Fish hide under large round lily pads to rest in the cool shadow from hot sun.",
+                badge: "Lily Shade",
+                keyword: "Shadow",
+                hint: "Fish swim under the floating green leaves to stay cool."
+              }
+            ]
+          },
+          autumn: {
+            headline: "Autumn: Eating Extra Food",
+            description: "Water starts to cool and fish prepare for winter.",
+            activities: [
+              {
+                picKey: "fish_autumn_0",
+                title: "Feeding on River Gravel",
+                sentence: "In autumn, fish eat extra water bugs and plants to get strong before winter comes.",
+                badge: "Eating Extra",
+                keyword: "Get strong",
+                hint: "The fish swims along the pebble bottom searching for food to eat."
+              },
+              {
+                picKey: "fish_autumn_1",
+                title: "Moving to Deep Water",
+                sentence: "Fish swim away from the chilly surface down into the deepest pool of the river.",
+                badge: "Deep Pool",
+                keyword: "Deep pool",
+                hint: "Fish head down into deep water where it stays warmer than the surface."
+              }
+            ]
+          },
+          winter: {
+            headline: "Winter: Resting Deep Under the Ice",
+            description: "The top of the pond freezes into hard blue ice.",
+            activities: [
+              {
+                picKey: "fish_winter_0",
+                title: "Resting Quietly on Bottom",
+                sentence: "In winter, fish rest very quietly at the bottom of the icy pond and move slowly.",
+                badge: "Quiet Rest",
+                keyword: "Move slowly",
+                hint: "Under the thick top ice, the fish floats very still to save its energy."
+              },
+              {
+                picKey: "fish_winter_1",
+                title: "Slowing Down Heartbeat",
+                sentence: "The fish slows down its body and barely needs any food during cold winter.",
+                badge: "Slow Body",
+                keyword: "Save energy",
+                hint: "The fish moves its fins gently and waits peacefully for spring."
+              }
+            ]
+          }
+        }
+      }
+    ];
+
+    /**
+     * ESL Picture Vocabulary List
+     */
+    const vocabularyList = [
+      { word: "Hibernate", emoji: "🛌", def: "A long winter sleep animals take to save energy in the freezing cold." },
+      { word: "Migration", emoji: "✈️", def: "When animals travel very long distances to find food or warmer weather." },
+      { word: "Nectar", emoji: "🍯", def: "Sweet sugary liquid made by flowers that bugs love to drink." },
+      { word: "Pollen", emoji: "🌼", def: "Yellow powder inside flowers that bees carry on their back legs." },
+      { word: "Camouflage", emoji: "🎋", def: "Colors or shapes that help animals hide in nature so nobody sees them." },
+      { word: "Chrysalis", emoji: "🌱", def: "A hard shell sleeping bag where a caterpillar turns into a butterfly." },
+      { word: "Tadpole", emoji: "🐸", def: "A baby frog with a tail that swims in ponds before growing legs." },
+      { word: "Puff Feathers", emoji: "🐦", def: "Making bird feathers stand up like a round ball to trap warm air." }
+    ];
+
+    /**
+     * Quiz Questions
+     */
+    const quizBank = [
+      {
+        seasonTag: "❄️ WINTER MYSTERY",
+        question: "Who puffs up feathers like a fluffy round ball to stay warm in the snow?",
+        options: ["Sparrows", "Frogs", "Fish", "Stick Insects"],
+        correct: 0,
+        hint: "It has wings and sings cheerful chirp songs!"
+      },
+      {
+        seasonTag: "🌸 SPRING MYSTERY",
+        question: "Who wakes up in spring and eats tiny green bugs on fresh leaves?",
+        options: ["Ladybug", "Fish", "Sparrows", "Stick Insects"],
+        correct: 0,
+        hint: "It has a round red shell with shiny black spots!"
+      },
+      {
+        seasonTag: "☀️ SUMMER MYSTERY",
+        question: "Who hovers in mid-air like a tiny helicopter over the summer pond?",
+        options: ["Ants", "Dragonflies", "Beetles", "Frogs"],
+        correct: 1,
+        hint: "It has four sparkling clear wings and big eyes!"
+      },
+      {
+        seasonTag: "🍂 AUTUMN MYSTERY",
+        question: "Who drops tiny eggs onto the forest floor that look just like plant seeds?",
+        options: ["Stick Insects", "Fish", "Sparrows", "Beetles"],
+        correct: 0,
+        hint: "This amazing bug looks just like a real tree twig!"
+      },
+      {
+        seasonTag: "❄️ WINTER MYSTERY",
+        question: "Who sleeps buried in soft mud at the bottom of the frozen pond?",
+        options: ["Frogs", "Butterflies", "Ants", "Sparrows"],
+        correct: 0,
+        hint: "It sings loud 'Ribbit' songs and catches flies with a sticky tongue!"
+      }
+    ];
+
+    /**
+     * Main App Controller
+     */
+    const app = {
+      currentAnimalId: 'ladybug',
+      currentSeason: 'spring',
+      speechRate: 0.75,
+      quizCurrentIndex: 0,
+      quizScore: 0,
+
+      init() {
+        this.renderAnimalCards('all');
+        this.renderGlossary();
+        this.loadAnimal(this.currentAnimalId, 'spring');
+      },
+
+      speakSentence(text, containerEl = null) {
+        if (!('speechSynthesis' in window)) return;
+
+        window.speechSynthesis.cancel();
+        soundFx.play('pop');
+
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.rate = this.speechRate;
+        utterance.pitch = 1.05;
+        utterance.lang = 'en-US';
+
+        if (containerEl) {
+          const words = containerEl.querySelectorAll('.read-word');
+          let currentWordIdx = 0;
+
+          utterance.onboundary = (event) => {
+            if (event.name === 'word') {
+              words.forEach(w => w.classList.remove('word-active'));
+              if (words[currentWordIdx]) {
+                words[currentWordIdx].classList.add('word-active');
+                currentWordIdx++;
+              }
+            }
+          };
+
+          utterance.onend = () => {
+            setTimeout(() => {
+              words.forEach(w => w.classList.remove('word-active'));
+            }, 500);
+          };
+
+          utterance.onerror = () => {
+            words.forEach(w => w.classList.remove('word-active'));
+          };
+        }
+
+        window.speechSynthesis.speak(utterance);
+      },
+
+      toggleSpeed() {
+        soundFx.play('pop');
+        const label = document.getElementById('speedLabel');
+        if (this.speechRate <= 0.8) {
+          this.speechRate = 1.0;
+          label.innerHTML = 'Normal 🐇';
+        } else {
+          this.speechRate = 0.75;
+          label.innerHTML = 'Slow 🐢';
+        }
+      },
+
+      showHome() {
+        soundFx.play('pop');
+        window.speechSynthesis.cancel();
+        document.getElementById('homeView').classList.remove('hidden');
+        document.getElementById('detailView').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      showDetail() {
+        soundFx.play('pop');
+        document.getElementById('homeView').classList.add('hidden');
+        document.getElementById('detailView').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      },
+
+      filterAnimals(category) {
+        soundFx.play('pop');
+        document.querySelectorAll('.category-btn').forEach(btn => {
+          if (btn.dataset.category === category) {
+            btn.className = 'category-btn active px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-emerald-400 bg-emerald-500 text-white shadow-sm transition';
+          } else {
+            btn.className = 'category-btn px-4 py-2 rounded-2xl font-bold text-xs sm:text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-300 transition';
+          }
+        });
+        this.renderAnimalCards(category);
+      },
+
+      renderAnimalCards(filter = 'all') {
+        const grid = document.getElementById('animalCardsGrid');
+        grid.innerHTML = '';
+
+        const filtered = animalsData.filter(a => {
+          if (filter === 'all') return true;
+          return a.category === filter;
+        });
+
+        filtered.forEach(animal => {
+          const card = document.createElement('div');
+          card.className = "animal-card-hover bg-white rounded-3xl border-4 border-slate-200 hover:border-emerald-400 p-4 shadow-sm hover:shadow-xl cursor-pointer flex flex-col justify-between group";
+          
+          card.innerHTML = `
+            <div class="space-y-3">
+              <div class="relative w-full h-32 sm:h-36 rounded-2xl overflow-hidden bg-slate-50 border-2 border-slate-100 flex items-center justify-center p-2">
+                ${SceneArt.portraits[animal.id]}
+                <span class="absolute top-2 right-2 text-2xl drop-shadow">${animal.badge}</span>
+                <span class="absolute bottom-2 left-2 px-2 py-0.5 bg-black/60 text-white text-[10px] font-bold rounded-lg backdrop-blur-sm">
+                  ${animal.categoryName}
+                </span>
+              </div>
+
+              <div class="text-center">
+                <h3 class="text-lg sm:text-xl font-black text-slate-800 group-hover:text-emerald-700 transition-colors">
+                  ${animal.name}
+                </h3>
+                <p class="text-xs font-semibold text-slate-400">Say: "${animal.phonics}"</p>
+              </div>
+
+              <div class="flex justify-center items-center gap-1.5 pt-1 text-sm sm:text-base">
+                <span title="Spring">🌸</span>
+                <span title="Summer">☀️</span>
+                <span title="Autumn">🍂</span>
+                <span title="Winter">❄️</span>
+              </div>
+            </div>
+
+            <div class="pt-3">
+              <button class="w-full py-2.5 rounded-2xl bg-emerald-50 group-hover:bg-emerald-500 text-emerald-800 group-hover:text-white font-black text-xs sm:text-sm transition shadow-sm flex items-center justify-center gap-2">
+                <span>Investigate</span>
+                <i class="fa-solid fa-arrow-right text-xs"></i>
+              </button>
+            </div>
+          `;
+
+          card.onclick = () => {
+            this.loadAnimal(animal.id, 'spring');
+            this.showDetail();
+          };
+
+          grid.appendChild(card);
+        });
+      },
+
+      loadAnimal(animalId, seasonKey = 'spring') {
+        this.currentAnimalId = animalId;
+        const animal = animalsData.find(a => a.id === animalId);
+        if (!animal) return;
+
+        // Render matching banner portrait
+        const container = document.getElementById('detailAnimalImgContainer');
+        container.innerHTML = SceneArt.portraits[animal.id];
+
+        document.getElementById('detailAnimalTitle').textContent = animal.name;
+        document.getElementById('detailAnimalPhonics').innerHTML = `Say: <span class="text-emerald-700 font-extrabold">"${animal.phonics}"</span>`;
+        document.getElementById('detailAnimalType').textContent = animal.categoryName;
+        document.getElementById('detailAnimalFunFact').innerHTML = `💡 <span class="font-bold text-slate-800">Fun Fact:</span> ${animal.funFact}`;
+
+        this.selectSeason(seasonKey);
+      },
+
+      speakCurrentAnimalName() {
+        const animal = animalsData.find(a => a.id === this.currentAnimalId);
+        if (animal) {
+          this.speakSentence(`${animal.name}. ${animal.phonics}. ${animal.funFact}`);
+        }
+      },
+
+      nextAnimal() {
+        const idx = animalsData.findIndex(a => a.id === this.currentAnimalId);
+        const nextIdx = (idx + 1) % animalsData.length;
+        this.loadAnimal(animalsData[nextIdx].id, this.currentSeason);
+      },
+
+      prevAnimal() {
+        const idx = animalsData.findIndex(a => a.id === this.currentAnimalId);
+        const prevIdx = (idx - 1 + animalsData.length) % animalsData.length;
+        this.loadAnimal(animalsData[prevIdx].id, this.currentSeason);
+      },
+
+      selectSeason(seasonKey) {
+        soundFx.play('pop');
+        this.currentSeason = seasonKey;
+        const animal = animalsData.find(a => a.id === this.currentAnimalId);
+        if (!animal) return;
+
+        const seasonData = animal.seasons[seasonKey];
+        if (!seasonData) return;
+
+        const tabSpring = document.getElementById('seasonTab-spring');
+        const tabSummer = document.getElementById('seasonTab-summer');
+        const tabAutumn = document.getElementById('seasonTab-autumn');
+        const tabWinter = document.getElementById('seasonTab-winter');
+
+        const tabs = [
+          { key: 'spring', el: tabSpring, bg: 'bg-emerald-50', ring: 'ring-4 ring-emerald-200' },
+          { key: 'summer', el: tabSummer, bg: 'bg-amber-50', ring: 'ring-4 ring-amber-200' },
+          { key: 'autumn', el: tabAutumn, bg: 'bg-orange-50', ring: 'ring-4 ring-orange-200' },
+          { key: 'winter', el: tabWinter, bg: 'bg-sky-50', ring: 'ring-4 ring-sky-200' }
+        ];
+
+        tabs.forEach(t => {
+          t.el.classList.remove('bg-emerald-50', 'bg-amber-50', 'bg-orange-50', 'bg-sky-50', 'ring-4', 'ring-emerald-200', 'ring-amber-200', 'ring-orange-200', 'ring-sky-200', 'scale-105');
+          t.el.classList.add('bg-white');
+          if (t.key === seasonKey) {
+            t.el.classList.remove('bg-white');
+            t.el.classList.add(t.bg, 'ring-4', t.ring.split(' ')[1], t.ring.split(' ')[2], 'scale-105');
+          }
+        });
+
+        const container = document.getElementById('seasonContainer');
+        const icons = { spring: '🌸', summer: '☀️', autumn: '🍂', winter: '❄️' };
+        
+        container.className = `rounded-3xl border-4 p-5 sm:p-8 space-y-6 transition-all duration-200 ${
+          seasonKey === 'spring' ? 'bg-emerald-50/70 border-emerald-300' :
+          seasonKey === 'summer' ? 'bg-amber-50/70 border-amber-300' :
+          seasonKey === 'autumn' ? 'bg-orange-50/70 border-orange-300' :
+          'bg-sky-50/70 border-sky-300'
+        }`;
+
+        document.getElementById('seasonBadgeIcon').textContent = icons[seasonKey];
+        document.getElementById('seasonHeadline').textContent = seasonData.headline;
+        document.getElementById('seasonSubtext').textContent = `${seasonData.description} (Shows ${seasonData.activities.length} special activities)`;
+
+        this.renderActivities(seasonData.activities, seasonKey);
+      },
+
+      renderActivities(activities, seasonKey) {
+        const list = document.getElementById('activitiesList');
+        list.innerHTML = '';
+
+        activities.forEach((act, idx) => {
+          const card = document.createElement('div');
+          card.className = "bg-white rounded-3xl border-2 border-slate-200 shadow-sm hover:shadow-lg p-5 flex flex-col justify-between space-y-4 transition";
+
+          const wordsHtml = act.sentence.split(' ').map(word => `<span class="read-word transition inline-block">${word}</span>`).join(' ');
+
+          const accentColors = {
+            spring: 'bg-emerald-50 text-emerald-800 border-emerald-300',
+            summer: 'bg-amber-50 text-amber-800 border-amber-300',
+            autumn: 'bg-orange-50 text-orange-800 border-orange-300',
+            winter: 'bg-sky-50 text-sky-800 border-sky-300'
+          };
+
+          const buttonStyles = {
+            spring: 'bg-emerald-500 hover:bg-emerald-600 shadow-emerald-200',
+            summer: 'bg-amber-500 hover:bg-amber-600 shadow-amber-200',
+            autumn: 'bg-orange-500 hover:bg-orange-600 shadow-orange-200',
+            winter: 'bg-sky-500 hover:bg-sky-600 shadow-sky-200'
+          };
+
+          // Render exact dedicated picture for this specific activity
+          const specificPicSvg = SceneArt.actionPics[act.picKey] || SceneArt.portraits[this.currentAnimalId];
+
+          card.innerHTML = `
+            <div class="space-y-3">
+              <!-- Dedicated Activity Picture Area -->
+              <div class="relative w-full h-44 rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 flex items-center justify-center p-2 shadow-inner">
+                ${specificPicSvg}
+                <span class="absolute bottom-2 right-2 px-2.5 py-1 bg-slate-900/80 backdrop-blur-sm rounded-full text-[11px] font-black text-white shadow-sm">
+                  ${act.badge}
+                </span>
+                <span class="absolute top-2 left-2 px-2.5 py-0.5 bg-white/95 rounded-full text-xs font-black shadow-sm text-slate-700">
+                  Activity ${idx + 1}
+                </span>
+              </div>
+
+              <h4 class="text-base sm:text-lg font-black text-slate-800 leading-snug">
+                ${act.title}
+              </h4>
+
+              <div class="sentence-box bg-slate-50 border-2 border-slate-200/80 rounded-2xl p-3.5 text-base sm:text-lg font-medium text-slate-700 leading-relaxed">
+                ${wordsHtml}
+              </div>
+
+              <!-- Visual Clue Hint for ESL Learners -->
+              <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-200/60 text-xs text-slate-600 flex items-start gap-2">
+                <span class="text-base">👀</span>
+                <p><em>${act.hint}</em></p>
+              </div>
+
+              <div class="flex items-center gap-2 pt-1">
+                <span class="text-xs font-bold uppercase text-slate-400">Key Word:</span>
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl text-xs font-black border ${accentColors[seasonKey]} cursor-pointer" onclick="app.speakSentence('${act.keyword}')" title="Click to hear word!">
+                  <span>${act.keyword}</span>
+                  <i class="fa-solid fa-volume-high opacity-70"></i>
+                </div>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button class="w-full py-2.5 px-4 rounded-2xl ${buttonStyles[seasonKey]} text-white font-extrabold text-xs sm:text-sm shadow-md transition active:scale-95 flex items-center justify-center gap-2 read-btn">
+                <i class="fa-solid fa-volume-high text-base"></i>
+                <span>Listen & Read Along</span>
+              </button>
+            </div>
+          `;
+
+          const readBtn = card.querySelector('.read-btn');
+          const sentenceBox = card.querySelector('.sentence-box');
+          readBtn.onclick = () => {
+            this.speakSentence(act.sentence, sentenceBox);
+          };
+
+          list.appendChild(card);
+        });
+      },
+
+      readAllCurrentSeason() {
+        const animal = animalsData.find(a => a.id === this.currentAnimalId);
+        if (!animal) return;
+        const seasonData = animal.seasons[this.currentSeason];
+        if (!seasonData) return;
+
+        let combinedText = `${animal.name} in ${this.currentSeason}. ${seasonData.headline}. `;
+        seasonData.activities.forEach(act => {
+          combinedText += `${act.title}: ${act.sentence} `;
+        });
+
+        this.speakSentence(combinedText);
+      },
+
+      openGlossary() {
+        soundFx.play('pop');
+        document.getElementById('glossaryModal').classList.remove('hidden');
+      },
+
+      closeGlossary() {
+        soundFx.play('pop');
+        window.speechSynthesis.cancel();
+        document.getElementById('glossaryModal').classList.add('hidden');
+      },
+
+      renderGlossary() {
+        const grid = document.getElementById('glossaryGrid');
+        grid.innerHTML = '';
+
+        vocabularyList.forEach(item => {
+          const card = document.createElement('div');
+          card.className = "bg-purple-50/70 border-2 border-purple-200 rounded-2xl p-3.5 space-y-1.5 hover:border-purple-400 transition cursor-pointer";
+          card.innerHTML = `
+            <div class="flex items-center justify-between">
+              <span class="text-2xl">${item.emoji}</span>
+              <button class="text-purple-600 hover:text-purple-800 text-xs sm:text-sm font-bold flex items-center gap-1">
+                <i class="fa-solid fa-volume-high"></i> Listen
+              </button>
+            </div>
+            <h4 class="text-sm sm:text-base font-extrabold text-purple-950">${item.word}</h4>
+            <p class="text-xs text-purple-800 font-medium leading-relaxed">${item.def}</p>
+          `;
+
+          card.onclick = () => {
+            this.speakSentence(`${item.word}. ${item.def}`);
+          };
+
+          grid.appendChild(card);
+        });
+      },
+
+      openQuiz() {
+        soundFx.play('pop');
+        this.quizCurrentIndex = 0;
+        this.quizScore = 0;
+        document.getElementById('quizModal').classList.remove('hidden');
+        this.renderQuizQuestion();
+      },
+
+      closeQuiz() {
+        soundFx.play('pop');
+        window.speechSynthesis.cancel();
+        document.getElementById('quizModal').classList.add('hidden');
+      },
+
+      renderQuizQuestion() {
+        const q = quizBank[this.quizCurrentIndex];
+        document.getElementById('quizSeasonTag').textContent = q.seasonTag;
+        document.getElementById('quizScoreTag').textContent = `Score: ${this.quizScore} / ${quizBank.length}`;
+        document.getElementById('quizQuestionText').textContent = q.question;
+        
+        const feedback = document.getElementById('quizFeedback');
+        feedback.className = 'hidden';
+        feedback.innerHTML = '';
+
+        const container = document.getElementById('quizOptions');
+        container.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = "w-full py-3 px-4 bg-white hover:bg-slate-50 border-2 border-slate-200 hover:border-emerald-400 rounded-2xl font-bold text-slate-800 text-xs sm:text-base text-left flex items-center justify-between shadow-sm transition active:scale-95";
+          btn.innerHTML = `
+            <span>${opt}</span>
+            <span class="text-xs bg-slate-100 px-2 py-1 rounded-lg text-slate-500 font-bold">Pick</span>
+          `;
+
+          btn.onclick = () => this.checkQuizAnswer(idx, btn);
+          container.appendChild(btn);
+        });
+      },
+
+      speakQuizQuestion() {
+        const q = quizBank[this.quizCurrentIndex];
+        this.speakSentence(q.question);
+      },
+
+      checkQuizAnswer(selectedIdx, btnElement) {
+        const q = quizBank[this.quizCurrentIndex];
+        const feedback = document.getElementById('quizFeedback');
+        feedback.classList.remove('hidden');
+
+        const allBtns = document.querySelectorAll('#quizOptions button');
+        allBtns.forEach(b => b.disabled = true);
+
+        if (selectedIdx === q.correct) {
+          soundFx.play('success');
+          this.quizScore++;
+          document.getElementById('quizScoreTag').textContent = `Score: ${this.quizScore} / ${quizBank.length}`;
+          btnElement.classList.remove('border-slate-200', 'bg-white');
+          btnElement.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-950');
+          feedback.className = 'p-3 rounded-2xl text-center font-black text-xs sm:text-sm bg-emerald-100 text-emerald-800 border-2 border-emerald-300';
+          feedback.innerHTML = `🎉 Super Job! That is correct!`;
+          this.speakSentence("Super Job! That is correct!");
+        } else {
+          soundFx.play('tryAgain');
+          btnElement.classList.remove('border-slate-200', 'bg-white');
+          btnElement.classList.add('border-red-400', 'bg-red-50', 'text-red-900');
+          
+          if (allBtns[q.correct]) {
+            allBtns[q.correct].classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+          }
+
+          feedback.className = 'p-3 rounded-2xl text-center font-bold text-xs sm:text-sm bg-amber-100 text-amber-900 border-2 border-amber-300';
+          feedback.innerHTML = `Nice try! Hint: ${q.hint}`;
+          this.speakSentence(`Nice try! The correct answer is ${q.options[q.correct]}.`);
+        }
+      },
+
+      nextQuizQuestion() {
+        soundFx.play('pop');
+        this.quizCurrentIndex++;
+        if (this.quizCurrentIndex >= quizBank.length) {
+          const feedback = document.getElementById('quizFeedback');
+          feedback.className = 'p-4 rounded-2xl text-center font-black text-sm sm:text-base bg-emerald-100 text-emerald-900 border-2 border-emerald-300';
+          feedback.innerHTML = `🌟 You finished the Season Quiz! Final Score: ${this.quizScore} out of ${quizBank.length}! Great job!`;
+          this.speakSentence(`Awesome job! You finished the quiz with ${this.quizScore} points!`);
+          this.quizCurrentIndex = 0;
+        } else {
+          this.renderQuizQuestion();
+        }
+      }
+    };
+
+    window.onload = function() {
+      app.init();
+    };
+  </script>
+</body>
+</html>
